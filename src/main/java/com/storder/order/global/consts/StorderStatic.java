@@ -19,5 +19,4 @@ public class StorderStatic {
     public static final Long NO_START_NUMBER = 1000000L;
     public static final Long MINIMUM_PAYMENT_WON = 1000L;
     public static final Long ZERO = 0L;
-
 }

@@ -15,7 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
         return configuration.getAuthenticationManager();
     }
 
@@ -39,24 +40,28 @@ public class SecurityConfig {
         http.httpBasic(httpBasic -> httpBasic.disable());
 
         // URL별 접근 권한 설정
-        http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/api/v1/users/**",
-                        "/api/auth/refresh-token",
-                        "/error",
-                        "/test/**",
-                        "/",
-                        "/api/v1/order/create",
-                        "/api/v1/pay/**",
-                        "/h2-console/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated());
+        http.authorizeHttpRequests(
+                auth ->
+                        auth.requestMatchers(
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/api/v1/users/**",
+                                        "/api/auth/refresh-token",
+                                        "/error",
+                                        "/test/**",
+                                        "/",
+                                        "/api/v1/order/create",
+                                        "/api/v1/pay/**",
+                                        "/h2-console/**")
+                                .permitAll()
+                                .requestMatchers("/admin/**")
+                                .hasRole("ADMIN")
+                                .anyRequest()
+                                .authenticated());
 
         // 세션 관리 설정 (Stateless로 설정)
-        http.sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement(
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }

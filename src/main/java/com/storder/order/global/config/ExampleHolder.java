@@ -7,8 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ExampleHolder {
-	private Example holder;
-	private String name;
-	private int code;
+    private Example holder;
+    private String name;
+    private int code;
 }
-

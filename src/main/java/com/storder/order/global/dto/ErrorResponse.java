@@ -1,8 +1,7 @@
 package com.storder.order.global.dto;
 
-import lombok.Getter;
-
 import java.time.LocalDateTime;
+import lombok.Getter;
 
 @Getter
 public class ErrorResponse {

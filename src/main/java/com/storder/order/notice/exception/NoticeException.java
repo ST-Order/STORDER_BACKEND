@@ -9,5 +9,4 @@ public class NoticeException extends GlobalCodeException {
     public NoticeException(NoticeErrorCode errorCode) {
         super(errorCode);
     }
-
 }

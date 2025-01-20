@@ -9,5 +9,4 @@ public class PayException extends GlobalCodeException {
     public PayException(PayErrorCode errorCode) {
         super(errorCode);
     }
-
 }

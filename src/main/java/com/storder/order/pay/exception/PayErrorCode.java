@@ -3,17 +3,16 @@ package com.storder.order.pay.exception;
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.dto.ErrorReason;
 import com.storder.order.global.exception.BaseErrorCode;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.lang.reflect.Field;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public enum PayErrorCode implements BaseErrorCode {
 
-    /*에러 코드 작성*/;
+/*에러 코드 작성*/ ;
 
     private final Integer status;
     private final String code;
