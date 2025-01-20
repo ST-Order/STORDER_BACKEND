@@ -1,9 +1,44 @@
+# Build and dependency directories
 HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+### 개별 추가 ###
+# Spring Boot application properties
+application.properties
+application.yml
+application-*.properties
+application-*.yml
+
+# 환경별 프로파일 설정 (e.g., dev, prod, staging)
+config/*.properties
+config/*.yml
+config/*-secret.properties
+config/*-secret.yml
+
+# Secret 관련 파일
+.env
+.env.*
+secrets/
+secrets/**
+
+# AWS, Google Cloud, 기타 클라우드 자격 증명 파일
+.aws/
+.gcp/
+.credentials/
+*.key
+*.pem
+*.crt
+*.p12
+*.json
+
+# Database credentials or SQL files
+*.db
+*.sql
+*.db-journal
 
 ### STS ###
 .apt_generated
@@ -35,3 +70,38 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+*.icloud
+
+### Windows ###
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
