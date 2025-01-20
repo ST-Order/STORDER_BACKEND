@@ -2,7 +2,7 @@ name: Java CI Pipeline
 
 on:
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "master" ]
 
 jobs:
   spotless-check:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '23'
+          java-version: '21'
           distribution: 'temurin'
 
       # 3. Gradle 캐싱
