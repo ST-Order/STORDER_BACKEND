@@ -9,5 +9,4 @@ public class MenuException extends GlobalCodeException {
     public MenuException(MenuErrorCode errorCode) {
         super(errorCode);
     }
-
 }

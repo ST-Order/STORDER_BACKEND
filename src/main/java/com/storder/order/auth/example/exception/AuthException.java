@@ -6,8 +6,7 @@ import lombok.Getter;
 @Getter
 public class AuthException extends GlobalCodeException {
 
-	public AuthException(AuthErrorCode errorCode) {
-		super(errorCode);
-	}
+    public AuthException(AuthErrorCode errorCode) {
+        super(errorCode);
+    }
 }
-

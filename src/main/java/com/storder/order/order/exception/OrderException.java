@@ -9,5 +9,4 @@ public class OrderException extends GlobalCodeException {
     public OrderException(OrderErrorCode errorCode) {
         super(errorCode);
     }
-
 }

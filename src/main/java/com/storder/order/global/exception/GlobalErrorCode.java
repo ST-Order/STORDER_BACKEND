@@ -1,14 +1,13 @@
 package com.storder.order.global.exception;
 
+import static com.storder.order.global.consts.StorderStatic.*;
+
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.dto.ErrorReason;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.lang.reflect.Field;
 import java.util.Objects;
-
-import static com.storder.order.global.consts.StorderStatic.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * 글로벌 관련 예외 코드들이 나온 곳입니다. 인증 , global, aop 종류등 도메인 제외한 exception 코드들이 모이는 곳입니다. 도메인 관련 Exception
@@ -53,5 +52,3 @@ public enum GlobalErrorCode implements BaseErrorCode {
         return Objects.nonNull(annotation) ? annotation.value() : this.getReason();
     }
 }
-
-
