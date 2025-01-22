@@ -2,7 +2,7 @@ package com.storder.order.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.storder.order.store.entity.UserRole;
+import com.storder.order.user.exception.UserErrorCode;
 import com.storder.order.user.exception.UserException;
 import java.util.HashMap;
 import java.util.Map;
