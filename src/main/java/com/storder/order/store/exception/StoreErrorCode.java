@@ -8,11 +8,14 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import static com.storder.order.global.consts.StorderStatic.*;
+
 @Getter
 @AllArgsConstructor
 public enum StoreErrorCode implements BaseErrorCode {
 
-/*에러 코드 작성*/ ;
+    @ExplainError("오픈 상태가 유효하지 않을 경우 발생하는 오류입니다.")
+    INVALID_OPENSTATUS(BAD_REQUEST, "STORE_400_1", "잘못된 오픈 상태 값입니다.");
 
     private final Integer status;
     private final String code;
