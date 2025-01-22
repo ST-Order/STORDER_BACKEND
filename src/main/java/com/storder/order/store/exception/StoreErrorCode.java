@@ -1,5 +1,7 @@
 package com.storder.order.store.exception;
 
+import static com.storder.order.global.consts.StorderStatic.*;
+
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.dto.ErrorReason;
 import com.storder.order.global.exception.BaseErrorCode;
@@ -8,12 +10,9 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static com.storder.order.global.consts.StorderStatic.*;
-
 @Getter
 @AllArgsConstructor
 public enum StoreErrorCode implements BaseErrorCode {
-
     @ExplainError("오픈 상태가 유효하지 않을 경우 발생하는 오류입니다.")
     INVALID_OPENSTATUS(BAD_REQUEST, "STORE_400_1", "잘못된 오픈 상태 값입니다.");
 

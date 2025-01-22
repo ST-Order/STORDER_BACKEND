@@ -4,17 +4,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.storder.order.order.exception.OrderErrorCode;
 import com.storder.order.order.exception.OrderException;
-import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum OrderStatus {
     UNPAY("결제 대기"), // 결제 대기
     PAY("결제 완료"), // 결제 완료
     COOKING("조리 중"), // 조리 중
-    READY("준비 완료");// 준비 완료
+    READY("준비 완료"); // 준비 완료
 
     private final String name;
 
@@ -42,5 +41,3 @@ public enum OrderStatus {
         return OrderStatus;
     }
 }
-
-

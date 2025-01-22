@@ -4,16 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.storder.order.store.exception.StoreErrorCode;
 import com.storder.order.store.exception.StoreException;
-import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum OpenStatus {
     OPEN("영업중"),
     CLOSE("영업 종료");
-    
+
     private final String name;
 
     private static final Map<String, OpenStatus> NAME_TO_ENUM_MAP = new HashMap<>();
@@ -40,4 +39,3 @@ public enum OpenStatus {
         return OpenStatus;
     }
 }
-

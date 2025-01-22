@@ -3,13 +3,10 @@ package com.storder.order.user.entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.storder.order.store.entity.UserRole;
-import com.storder.order.store.exception.StoreErrorCode;
-import com.storder.order.store.exception.StoreException;
 import com.storder.order.user.exception.UserException;
-import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum UserRole {
