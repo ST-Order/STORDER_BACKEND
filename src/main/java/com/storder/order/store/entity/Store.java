@@ -26,7 +26,7 @@ public class Store extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private StoreStatus status;
+    private OpenStatus status;
 
     @Column(name = "store_image")
     private String storeImage;
