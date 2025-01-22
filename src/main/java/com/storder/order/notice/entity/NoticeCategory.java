@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.storder.order.notice.exception.NoticeErrorCode;
 import com.storder.order.notice.exception.NoticeException;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
@@ -20,6 +19,7 @@ public enum NoticeCategory {
     ETC("기타"); // 기타
 
     private final String name;
+
     private static final Map<String, NoticeCategory> NAME_TO_ENUM_MAP = new HashMap<>();
 
     static {
@@ -38,7 +38,7 @@ public enum NoticeCategory {
         NoticeCategory NoticeCategory = NAME_TO_ENUM_MAP.get(name);
 
         if (NoticeCategory == null) {
-            throw new NoticeException(NoticeErrorCode.INVALID_NOTICECATEGORY);
+            throw new NoticeException(NoticeErrorCode.INVALID_NOTICE_CATEGORY);
         }
 
         return NoticeCategory;

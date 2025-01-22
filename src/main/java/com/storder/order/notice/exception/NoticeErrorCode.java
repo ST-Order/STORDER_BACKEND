@@ -15,7 +15,10 @@ import static com.storder.order.global.consts.StorderStatic.*;
 public enum NoticeErrorCode implements BaseErrorCode {
 
     @ExplainError("공지사항 카테고리가 유효하지 않을 경우 발생하는 오류입니다.")
-    INVALID_NOTICECATEGORY(BAD_REQUEST, "NOTICE_400_1", "잘못된 공지사항 카테고리입니다.");
+    INVALID_NOTICE_CATEGORY(BAD_REQUEST, "NOTICE_400_1", "잘못된 공지사항 카테고리입니다."),
+
+    @ExplainError("공지사항 노출 시간이 유효하지 않을 경우 발생하는 오류입니다.")
+    INVALID_NOTICE_EXPOSURE_TIME(BAD_REQUEST, "NOTICE_400_2", "잘못된 공지사항 노출 시간입니다.");
 
     private final Integer status;
     private final String code;
