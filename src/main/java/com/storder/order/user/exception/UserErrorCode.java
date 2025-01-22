@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserErrorCode implements BaseErrorCode {
     @ExplainError("유저 역할이 유효하지 않은 경우 발생하는 오류입니다.")
-    INVAILD_USERROLE(BAD_REQUEST, "USER_400_1", "잘못된 유저 역할 값입니다."),
+    INVALID_USERROLE(BAD_REQUEST, "USER_400_1", "잘못된 유저 역할 값입니다."),
 
     @ExplainError("비밀번호가 형식에 맞지 않는 경우 발생하는 오류입니다.")
     INVALID_PASSWORD_FORMAT(BAD_REQUEST, "USER_400_2", "비밀번호가 형식에 맞지 않습니다."),
