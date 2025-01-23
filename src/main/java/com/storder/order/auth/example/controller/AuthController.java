@@ -36,5 +36,4 @@ public class AuthController {
     public ResponseEntity<String> refresh(@RequestHeader("Refresh") String refreshToken) {
         return ResponseEntity.ok("새로운 AccessToken: " + refreshToken);
     }
-
 }
