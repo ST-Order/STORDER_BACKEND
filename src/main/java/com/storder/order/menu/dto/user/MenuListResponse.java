@@ -1,11 +1,9 @@
-package com.storder.order.menu.dto.response;
+package com.storder.order.menu.dto.user;
 
 import com.storder.order.store.entity.OpenStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class MenuListResponse {
     @Schema(description = "메뉴 목록")
     private List<Menus> menus;
 
-    @Getter
+    @Data
     @Schema(description = "메뉴 정보 DTO")
     public static class Menus {
 

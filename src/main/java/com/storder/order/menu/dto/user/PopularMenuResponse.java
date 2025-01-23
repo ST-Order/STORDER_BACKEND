@@ -1,4 +1,4 @@
-package com.storder.order.menu.dto.response;
+package com.storder.order.menu.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
