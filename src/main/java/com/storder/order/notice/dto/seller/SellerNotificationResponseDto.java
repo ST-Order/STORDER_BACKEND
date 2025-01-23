@@ -1,4 +1,4 @@
-package com.storder.order.notice.dto;
+package com.storder.order.notice.dto.seller;
 
 import com.storder.order.notice.entity.NoticeCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
