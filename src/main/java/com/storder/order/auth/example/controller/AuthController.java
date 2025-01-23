@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Auth", description = "로그인 인증 API")
-@RestController
+// @RestController
 @RequestMapping("/api/v1/login/oauth2")
 @RequiredArgsConstructor
 public class AuthController {
@@ -36,4 +36,5 @@ public class AuthController {
     public ResponseEntity<String> refresh(@RequestHeader("Refresh") String refreshToken) {
         return ResponseEntity.ok("새로운 AccessToken: " + refreshToken);
     }
+
 }
