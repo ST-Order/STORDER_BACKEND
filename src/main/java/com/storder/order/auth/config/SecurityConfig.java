@@ -52,6 +52,7 @@ public class SecurityConfig {
                                         "/",
                                         "/api/v1/order/create",
                                         "/api/v1/pay/**",
+                                        "/api/v1/mypage/**",
                                         "/h2-console/**")
                                 .permitAll()
                                 .requestMatchers("/admin/**")
