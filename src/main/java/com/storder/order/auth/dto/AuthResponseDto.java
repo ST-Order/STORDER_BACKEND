@@ -2,6 +2,7 @@ package com.storder.order.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,6 +22,15 @@ public class AuthResponseDto {
 
         @Schema(description = "인증받은 시간", example = "2023-01-03T09:30:22")
         private LocalDateTime certifiedDate;
+
+        public static EmailVerification of(Map<String, Object> map) {
+            return EmailVerification.builder()
+                    .success(Boolean.parseBoolean(map.get("success").toString()))
+                    .univName(map.get("univName").toString())
+                    .certifiedEmail(map.get("certified_email").toString())
+                    .certifiedDate(LocalDateTime.parse(map.get("certified_date").toString()))
+                    .build();
+        }
     }
 
     @Getter
