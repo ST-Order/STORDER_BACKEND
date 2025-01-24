@@ -1,4 +1,4 @@
-package com.storder.order.auth.example.exception;
+package com.storder.order.auth.exception;
 
 import static com.storder.order.global.consts.StorderStatic.*;
 
@@ -13,6 +13,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AuthErrorCode implements BaseErrorCode {
+    @ExplainError("univcert 인증 메일 전송시 발생하는 오류입니다.")
+    SEND_CERTIFICATION_CODE_ERROR(BAD_REQUEST, "AUTH_400_1", "이미 인증번호를 보낸 메일입니다."),
+    @ExplainError("univcert 인증번호 확인시 발생하는 오류입니다.")
+    VERIFY_CERTIFICATION_CODE_ERROR(BAD_REQUEST, "AUTH_400_2", "일치하지 않는 인증코드입니다."),
+
     @ExplainError("accessToken 만료시 발생하는 오류입니다.")
     TOKEN_EXPIRED(UNAUTHORIZED, "AUTH_401_1", "인증 시간이 만료되었습니다. 인증토큰을 재 발급 해주세요"),
     @ExplainError("인증 토큰이 잘못됐을 때 발생하는 오류입니다.")

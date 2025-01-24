@@ -47,4 +47,7 @@ public class Menu extends BaseEntity {
 
     @Column(name = "menu_image")
     private String menuImage;
+
+    @Column(name = "menu_rating", nullable = false)
+    private Double menuRating;
 }

@@ -51,10 +51,15 @@ public class SecurityConfig {
                                         "/test/**",
                                         "/",
                                         "/api/v1/order/create",
-                                        "/api/v1/pay/**",
+                                        "/api/v1/notifications/**",
+                                        "/api/v1/menus/**",
                                         "/api/v1/mypage/**",
                                         "/api/v1/sellers/**",
+                                        "/api/v1/reviews/**",
+                                        "/api/v1/payments/**",
+                                        "/api/v1/auth/**",
                                         "/h2-console/**")
+
                                 .permitAll()
                                 .requestMatchers("/admin/**")
                                 .hasRole("ADMIN")

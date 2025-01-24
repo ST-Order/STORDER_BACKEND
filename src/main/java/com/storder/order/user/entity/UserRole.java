@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum UserRole {
     USER("유저"),
-    STORE("사장님");
+    SELLER("사장님");
 
     private final String name;
 
