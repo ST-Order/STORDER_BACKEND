@@ -1,8 +1,8 @@
 package com.storder.order.notice.controller;
 
 import com.storder.order.global.dto.ApiResponse;
-import com.storder.order.notice.dto.SellerNotificationRequestDto;
-import com.storder.order.notice.dto.SellerNotificationResponseDto;
+import com.storder.order.notice.dto.seller.SellerNotificationRequestDto;
+import com.storder.order.notice.dto.seller.SellerNotificationResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Notice Controller", description = "[사장님] 공지사항 관련 API")
+@Tag(name = "Seller Notice Controller", description = "[사장님] 공지사항 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/sellers/notifications")
-public class StoreNoticeController {
+public class SellerNoticeController {
 
     @GetMapping
     @Operation(summary = "전체 공지사항 조회", description = "전체 공지사항을 조회합니다.")
