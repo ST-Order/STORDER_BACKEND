@@ -39,5 +39,9 @@ jobs:
         run: ./gradlew spotlessCheck
 
       # 6. Gradle clean build
+      - name: Set YML
+        run: |
+          echo ${{ secrets.APPLICATION_YML }} | base64 --decode > ./src/main/resources/application.yml
+
       - name: Build with Gradle
         run: ./gradlew clean build
