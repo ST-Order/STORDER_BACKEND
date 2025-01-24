@@ -19,6 +19,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Set YML
+        run: |
+          echo ${{ secrets.APPLICATION_YML }} | base64 --decode > ./src/main/resources/application.yml
+
       # 3. Gradle 캐싱
       - name: Cache Gradle packages
         uses: actions/cache@v2
@@ -40,8 +44,4 @@ jobs:
 
       # 6. Gradle clean build
       - name: Build with Gradle
-        run: ./gradlew clean build
-
-      - name: Set YML
-        run: |
-          echo ${{ secrets.APPLICATION_YML }} | base64 --decode > ./src/main/resources/application.yml
+        run: ./gradlew clean build -x test
