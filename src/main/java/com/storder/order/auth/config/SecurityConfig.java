@@ -59,7 +59,6 @@ public class SecurityConfig {
                                         "/api/v1/payments/**",
                                         "/api/v1/auth/**",
                                         "/h2-console/**")
-
                                 .permitAll()
                                 .requestMatchers("/admin/**")
                                 .hasRole("ADMIN")
