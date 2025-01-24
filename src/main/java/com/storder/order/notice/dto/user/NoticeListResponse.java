@@ -1,5 +1,6 @@
 package com.storder.order.notice.dto.user;
 
+import com.storder.order.notice.entity.NoticeCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class NoticeListResponse {
     private String title;
 
     @Schema(description = "공지사항 카테고리", example = "신메뉴 출시")
-    private String category;
+    private NoticeCategory category;
 
     @Schema(description = "생성일시", example = "2021-07-01T00:00:00")
     private LocalDateTime createdAt;

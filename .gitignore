@@ -8,8 +8,8 @@ build/
 
 ### 개별 추가 ###
 # Spring Boot application properties
+application-dev.yml
 application.properties
-application.yml
 application-*.properties
 application-*.yml
 

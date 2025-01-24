@@ -1,5 +1,6 @@
 package com.storder.order.notice.dto.user;
 
+import com.storder.order.notice.entity.NoticeCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class NoticeDetailResponse {
     private String title;
 
     @Schema(description = "공지사항 카테고리", example = "신메뉴 출시")
-    private String category;
+    private NoticeCategory category;
 
     @Schema(description = "관련 이미지", example = "/images/notice1.png")
     private String image;
