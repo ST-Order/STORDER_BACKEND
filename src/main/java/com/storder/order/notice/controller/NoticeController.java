@@ -23,18 +23,16 @@ public class NoticeController {
     @Operation(summary = "공지사항 목록 조회", description = "등록된 공지사항 목록을 조회합니다.")
     public ResponseEntity<ApiResponse<NoticeListResponse>> getAllNotifications() {
 
-        //List<NoticeListResponse> noticeList = null;
+        // List<NoticeListResponse> noticeList = null;
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     @GetMapping("/{noticeId}/details")
     @Operation(summary = "공지사항 상세 조회", description = "특정 공지사항의 상세 정보를 조회합니다.")
     public ResponseEntity<ApiResponse<NoticeDetailResponse>> getNotificationDetails(
-            @Parameter(description = "공지사항 ID", example = "1")
-            @PathVariable Long noticeId
-    ) {
+            @Parameter(description = "공지사항 ID", example = "1") @PathVariable Long noticeId) {
 
-        //NoticeListResponse noticeDetail = null;
+        // NoticeListResponse noticeDetail = null;
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 }

@@ -2,10 +2,9 @@ package com.storder.order.notice.dto.user;
 
 import com.storder.order.notice.entity.NoticeCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @Schema(description = "공지사항 목록 조회 응답 DTO")

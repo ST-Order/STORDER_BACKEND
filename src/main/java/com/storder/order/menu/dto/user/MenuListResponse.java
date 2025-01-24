@@ -2,10 +2,9 @@ package com.storder.order.menu.dto.user;
 
 import com.storder.order.store.entity.OpenStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Schema(description = "메뉴 목록 조회 응답 DTO")
@@ -56,7 +55,16 @@ public class MenuListResponse {
         private Boolean isAvailable;
 
         @Builder
-        public Menus(Long menuId, String menuName, String menuImage, String description, Integer price, Boolean isBest, Boolean isPopular, Boolean isSoldOut, Boolean isAvailable) {
+        public Menus(
+                Long menuId,
+                String menuName,
+                String menuImage,
+                String description,
+                Integer price,
+                Boolean isBest,
+                Boolean isPopular,
+                Boolean isSoldOut,
+                Boolean isAvailable) {
             this.menuId = menuId;
             this.menuName = menuName;
             this.menuImage = menuImage;

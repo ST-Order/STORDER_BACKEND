@@ -1,11 +1,10 @@
 package com.storder.order.menu.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Schema(description = "메뉴 리뷰 조회 응답 DTO")
@@ -48,6 +47,5 @@ public class MenuReviewResponse {
 
         @Schema(description = "리뷰 작성일", example = "2021-08-01T12:00:00")
         private LocalDateTime createdAt;
-
     }
 }

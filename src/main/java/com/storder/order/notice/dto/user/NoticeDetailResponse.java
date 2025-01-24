@@ -2,10 +2,9 @@ package com.storder.order.notice.dto.user;
 
 import com.storder.order.notice.entity.NoticeCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -29,7 +28,10 @@ public class NoticeDetailResponse {
     @Schema(description = "관련 이미지", example = "/images/notice1.png")
     private String image;
 
-    @Schema(description = "내용", example = "사나이의 맛!! 제육덮밥 출시\n2025년 1월부터 요청이 많았던 제육덮밥을 드디어 출시합니다!!\n바비든든만의 비법소스로 메콤한 돼지고기 제육덮밥을 즐겨보세요")
+    @Schema(
+            description = "내용",
+            example =
+                    "사나이의 맛!! 제육덮밥 출시\n2025년 1월부터 요청이 많았던 제육덮밥을 드디어 출시합니다!!\n바비든든만의 비법소스로 메콤한 돼지고기 제육덮밥을 즐겨보세요")
     private String content;
 
     @Schema(description = "생성일시", example = "2021-07-01T00:00:00")
