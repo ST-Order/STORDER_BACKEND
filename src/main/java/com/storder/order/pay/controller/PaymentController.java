@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Payments Controller", description = "[유저] 결제 관련 API")
 public class PaymentController {
 
-	@Operation(summary = "결제 처리", description = "결제 요청 데이터를 받아 결제를 처리합니다.")
-	@PostMapping
-	public ApiResponse<Void> processPayment(@RequestBody PaymentRequestDto paymentRequestDto) {
-		String itemName = paymentRequestDto.getItemName();
-		Integer quantity = paymentRequestDto.getQuantity();
-		Integer totalAmount = paymentRequestDto.getTotalAmount();
-		Integer taxFreeAmount = paymentRequestDto.getTaxFreeAmount();
+    @Operation(summary = "결제 처리", description = "결제 요청 데이터를 받아 결제를 처리합니다.")
+    @PostMapping
+    public ApiResponse<Void> processPayment(@RequestBody PaymentRequestDto paymentRequestDto) {
+        String itemName = paymentRequestDto.getItemName();
+        Integer quantity = paymentRequestDto.getQuantity();
+        Integer totalAmount = paymentRequestDto.getTotalAmount();
+        Integer taxFreeAmount = paymentRequestDto.getTaxFreeAmount();
 
-		String successMessage = String.format("'%s' 결제가 성공적으로 완료되었습니다. (수량: %d, 총 금액: %d원)",
-			itemName, quantity, totalAmount);
+        String successMessage =
+                String.format(
+                        "'%s' 결제가 성공적으로 완료되었습니다. (수량: %d, 총 금액: %d원)",
+                        itemName, quantity, totalAmount);
 
-		return ApiResponse.success(successMessage, null);
-	}
+        return ApiResponse.success(successMessage, null);
+    }
 }

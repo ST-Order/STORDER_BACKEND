@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentRequestDto {
 
-	private String itemName;
-	private Integer quantity;
-	private Integer totalAmount;
-	private Integer taxFreeAmount;
+    private String itemName;
+    private Integer quantity;
+    private Integer totalAmount;
+    private Integer taxFreeAmount;
 }
