@@ -1,13 +1,11 @@
 package com.storder.order.user.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-@AllArgsConstructor
 public class UserInfoResponseDto {
 
     @Schema(description = "사용자 이름", example = "가나디")

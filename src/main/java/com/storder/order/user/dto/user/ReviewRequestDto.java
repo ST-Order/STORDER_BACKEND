@@ -2,12 +2,10 @@ package com.storder.order.user.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class ReviewRequestDto {
 
     @Schema(description = "이미지 URL", example = "imageURL~~")
