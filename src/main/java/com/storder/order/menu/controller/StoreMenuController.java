@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/sellers/menus")
-@Tag(name = "StoreMenu", description = "메뉴 관리 관련 API")
+@Tag(name = "StoreMenu Controller", description = "[사장님] 메뉴 관련 API")
 public class StoreMenuController {
 
     @Operation(summary = "등록된 메뉴 조회", description = "모든 등록된 메뉴를 조회합니다.")

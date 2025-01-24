@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "MyPage", description = "마이페이지 관련 API")
+@Tag(name = "UserPage Controller", description = "[유저] 사용자 마이페이지 관련 API")
 public class UserController {
 
     @Operation(
