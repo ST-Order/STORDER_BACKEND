@@ -51,6 +51,8 @@ public class SecurityConfig {
                                         "/test/**",
                                         "/",
                                         "/api/v1/order/create",
+                                        "/api/v1/notifications/**",
+                                        "/api/v1/menus/**",
                                         "/api/v1/pay/**",
                                         "/h2-console/**")
                                 .permitAll()

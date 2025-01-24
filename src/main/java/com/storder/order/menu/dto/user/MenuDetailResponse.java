@@ -21,7 +21,13 @@ public class MenuDetailResponse {
     private String menuImage;
 
     @Schema(description = "메뉴 별점", example = "4.5")
-    private Double rating;
+    private Double menuRating;
+
+    @Schema(description = "대표 메뉴 여부", example = "true")
+    private Boolean isBest;
+
+    @Schema(description = "인기 메뉴 여부", example = "true")
+    private Boolean isPopular;
 
     @Schema(description = "메뉴 설명", example = "맼모한 제육과 밥을 한번에!")
     private String description;
@@ -48,18 +54,18 @@ public class MenuDetailResponse {
         @Schema(description = "옵션 이름", example = "계란후라이")
         private String optionName;
 
-        @Schema(description = "추가 가격", example = "500")
+        @Schema(description = "옵션 가격", example = "500")
         private Integer optionPrice;
 
         @Schema(description = "옵션 선택 가능 여부", example = "true")
-        private Boolean isOptionAvailable;
+        private Boolean OptionAvailable;
 
         @Builder
-        public Options(Long optionId, String optionName, Integer optionPrice, Boolean isOptionAvailable) {
+        public Options(Long optionId, String optionName, Integer optionPrice, Boolean OptionAvailable) {
             this.optionId = optionId;
             this.optionName = optionName;
             this.optionPrice = optionPrice;
-            this.isOptionAvailable = isOptionAvailable;
+            this.OptionAvailable = OptionAvailable;
         }
     }
 }
