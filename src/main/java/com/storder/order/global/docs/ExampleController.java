@@ -1,6 +1,6 @@
 package com.storder.order.global.docs;
 
-import com.storder.order.auth.example.exception.AuthErrorCode;
+import com.storder.order.auth.exception.AuthErrorCode;
 import com.storder.order.global.annotation.ApiErrorCodeExample;
 import com.storder.order.global.exception.GlobalErrorCode;
 import com.storder.order.menu.exception.MenuErrorCode;

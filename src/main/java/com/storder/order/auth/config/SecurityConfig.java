@@ -54,7 +54,8 @@ public class SecurityConfig {
                                         "/api/v1/notifications/**",
                                         "/api/v1/menus/**",
                                         "/api/v1/pay/**",
-                                        "/h2-console/**")
+                                        "/h2-console/**",
+                                        "/api/v1/auth/**")
                                 .permitAll()
                                 .requestMatchers("/admin/**")
                                 .hasRole("ADMIN")

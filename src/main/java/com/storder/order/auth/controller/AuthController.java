@@ -2,10 +2,12 @@ package com.storder.order.auth.controller;
 
 import com.storder.order.auth.dto.AuthRequestDto;
 import com.storder.order.auth.dto.AuthResponseDto;
+import com.storder.order.auth.service.AuthService;
 import com.storder.order.global.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth/")
 public class AuthController {
+
+    private final AuthService authService;
 
     @PostMapping("/register")
     @Operation(summary = "회원가입", description = "회원가입을 합니다.")
@@ -38,15 +42,18 @@ public class AuthController {
     @PostMapping("/certification")
     @Operation(summary = "이메일 인증 요청", description = "학교 이메일로 인증 요청을 메일을 보냅니다.")
     public ResponseEntity<ApiResponse<Boolean>> certifyUniversity(
-            @RequestBody AuthRequestDto.EmailCertification request) {
-        return ResponseEntity.ok(ApiResponse.success("인증번호 발송에 성공하였습니다.", Boolean.TRUE));
+            @Parameter(description = "이메일", required = true) @RequestParam String email)
+            throws IOException {
+        return ResponseEntity.ok(
+                ApiResponse.success("인증번호 발송에 성공하였습니다.", authService.sendCertificationCode(email)));
     }
 
     @PostMapping("/verification")
     @Operation(summary = "이메일 인증 코드 확인", description = "이메일로 보낸 인증 코드를 확인합니다.")
     public ResponseEntity<ApiResponse<AuthResponseDto.EmailVerification>> verifyUniversity(
-            @RequestBody AuthRequestDto.EmailVerification request) {
-        return ResponseEntity.ok(ApiResponse.success("인증에 성공하였습니다.", null));
+            @RequestBody AuthRequestDto.EmailVerification request) throws IOException {
+        return ResponseEntity.ok(
+                ApiResponse.success("인증에 성공하였습니다.", authService.verifyCertificationCode(request)));
     }
 
     @PostMapping("/login")
