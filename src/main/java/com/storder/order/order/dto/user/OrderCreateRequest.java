@@ -1,10 +1,9 @@
 package com.storder.order.order.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Schema(description = "주문 생성 요청 DTO")

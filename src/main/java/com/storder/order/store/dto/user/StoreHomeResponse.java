@@ -1,11 +1,10 @@
 package com.storder.order.store.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Schema(description = "상점 홈 조회 응답 DTO")

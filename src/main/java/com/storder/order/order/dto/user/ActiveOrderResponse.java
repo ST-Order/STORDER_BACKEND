@@ -2,10 +2,9 @@ package com.storder.order.order.dto.user;
 
 import com.storder.order.order.entity.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Schema(description = "활성화된 주문 현황 조회 응답 DTO")

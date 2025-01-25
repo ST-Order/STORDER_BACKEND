@@ -2,11 +2,10 @@ package com.storder.order.order.dto.user;
 
 import com.storder.order.order.entity.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Schema(description = "주문 생성 응답 DTO")

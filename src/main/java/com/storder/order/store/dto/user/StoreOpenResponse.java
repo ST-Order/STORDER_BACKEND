@@ -18,5 +18,4 @@ public class StoreOpenResponse {
 
     @Schema(description = "오픈 상태", example = "OPEN")
     private OpenStatus openStatus;
-
 }

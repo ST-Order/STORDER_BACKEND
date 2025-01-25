@@ -10,12 +10,12 @@ import lombok.Data;
 @Builder
 public class OpenCloseResponse {
 
-        @Schema(description = "상점 ID", example = "1")
-        private Long storeId;
+    @Schema(description = "상점 ID", example = "1")
+    private Long storeId;
 
-        @Schema(description = "상점 이름", example = "바비든든")
-        private String storeName;
+    @Schema(description = "상점 이름", example = "바비든든")
+    private String storeName;
 
-        @Schema(description = "오픈 상태", example = "OPEN")
-        private OpenStatus openStatus;
+    @Schema(description = "오픈 상태", example = "OPEN")
+    private OpenStatus openStatus;
 }

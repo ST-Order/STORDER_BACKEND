@@ -21,16 +21,14 @@ public class SellerStoreController {
     @PatchMapping("/{storeId}/open")
     @Operation(summary = "식당 오픈", description = "식당을 오픈 상태로 전환합니다.(영업시작)")
     public ResponseEntity<ApiResponse<OpenCloseResponse>> storeOpen(
-            @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId
-    ){
+            @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId) {
         return ResponseEntity.ok(ApiResponse.success("식당을 오픈하였습니다.", null));
     }
 
     @PatchMapping("/{storeId}/close")
     @Operation(summary = "식당 마감", description = "식당을 영업 종료합니다.")
     public ResponseEntity<ApiResponse<OpenCloseResponse>> storeClose(
-            @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId
-    ){
+            @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId) {
         return ResponseEntity.ok(ApiResponse.success("식당 영업 종료하였습니다.", null));
     }
 }

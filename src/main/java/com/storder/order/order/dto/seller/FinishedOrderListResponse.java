@@ -1,10 +1,9 @@
 package com.storder.order.order.dto.seller;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Schema(description = "완료된 주문 처리 내역 조회 응답 DTO")
