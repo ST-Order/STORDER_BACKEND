@@ -1,5 +1,6 @@
 package com.storder.order.store.dto.user;
 
+import com.storder.order.store.entity.OpenStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class StoreOpenResponse {
     @Schema(description = "상점 이름", example = "바비든든")
     private String storeName;
 
-    @Schema(description = "오픈 여부", example = "true")
-    private Boolean isOpen;
+    @Schema(description = "오픈 상태", example = "OPEN")
+    private OpenStatus openStatus;
 
 }
