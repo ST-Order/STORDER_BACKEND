@@ -43,31 +43,9 @@ public class AuthRequestDto {
 
     @Getter
     @Builder
-    public static class EmailCertification {
-        @Schema(description = "부여받은 API 키", example = "b70a66b3-f1de-307d-14e1-b6c2ac1f8dea")
-        private String key;
-
-        @Schema(description = "이메일", example = "orieasy1@seoultech.ac.kr")
-        private String email;
-
-        @Schema(description = "대학명", example = "서울과학기술대학교")
-        private String univName;
-
-        @Schema(description = "false로 고정, 소유자 인증만", example = "false")
-        private boolean univCheck;
-    }
-
-    @Getter
-    @Builder
     public static class EmailVerification {
-        @Schema(description = "부여받은 API 키", example = "b70a66b3-f1de-307d-14e1-b6c2ac1f8dea")
-        private String key;
-
         @Schema(description = "이메일", example = "orieasy1@seoultech.ac.kr")
         private String email;
-
-        @Schema(description = "대학명", example = "서울과학기술대학교")
-        private String univName;
 
         @Schema(description = "인증코드", example = "3816")
         private int code;

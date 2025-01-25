@@ -1,4 +1,4 @@
-package com.storder.order.auth.example.exception;
+package com.storder.order.auth.exception;
 
 import com.storder.order.global.exception.GlobalCodeException;
 import lombok.Getter;
