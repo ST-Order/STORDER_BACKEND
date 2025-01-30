@@ -35,7 +35,7 @@ public enum OrderStatus {
         OrderStatus OrderStatus = NAME_TO_ENUM_MAP.get(name);
 
         if (OrderStatus == null) {
-            throw new OrderException(OrderErrorCode.INVALID_ORDERSTATUS);
+            throw new OrderException(OrderErrorCode.INVALID_ORDER_STATUS);
         }
 
         return OrderStatus;
