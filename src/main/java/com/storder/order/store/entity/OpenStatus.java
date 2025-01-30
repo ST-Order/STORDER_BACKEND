@@ -33,7 +33,7 @@ public enum OpenStatus {
         OpenStatus OpenStatus = NAME_TO_ENUM_MAP.get(name);
 
         if (OpenStatus == null) {
-            throw new StoreException(StoreErrorCode.INVALID_OPENSTATUS);
+            throw new StoreException(StoreErrorCode.INVALID_OPEN_STATUS);
         }
 
         return OpenStatus;
