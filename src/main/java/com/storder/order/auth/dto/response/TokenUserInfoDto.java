@@ -7,11 +7,9 @@ import lombok.Getter;
 @Builder
 public class TokenUserInfoDto {
 
-	private String email;
+    private String email;
 
-	public static TokenUserInfoDto of(String email) {
-		return TokenUserInfoDto.builder()
-			.email(email)
-			.build();
-	}
+    public static TokenUserInfoDto of(String email) {
+        return TokenUserInfoDto.builder().email(email).build();
+    }
 }

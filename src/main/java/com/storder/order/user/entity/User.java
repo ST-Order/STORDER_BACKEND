@@ -37,12 +37,12 @@ public class User extends BaseEntity {
 
     public static User createEmailVerifiedUser(String email) {
         return User.builder()
-            .email(email)
-            .name("beforeSignUp")
-            .password("beforeSignUp")
-            .role(USER)
-            .orderCount(0)
-            .build();
+                .email(email)
+                .name("beforeSignUp")
+                .password("beforeSignUp")
+                .role(USER)
+                .orderCount(0)
+                .build();
     }
 
     public void signUp(AuthRequestDto.SignUp request) {

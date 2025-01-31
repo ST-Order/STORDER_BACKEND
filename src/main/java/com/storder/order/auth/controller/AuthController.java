@@ -5,13 +5,10 @@ import com.storder.order.auth.dto.response.AuthResponseDto;
 import com.storder.order.auth.service.AuthService;
 import com.storder.order.global.dto.ApiResponse;
 import com.storder.order.user.entity.UserDetails;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
-
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,18 +60,16 @@ public class AuthController {
 
     @DeleteMapping
     @Operation(summary = "회원 탈퇴", description = "앱을 탈퇴합니다.")
-    public ResponseEntity<ApiResponse<Void>> leaving(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponse<Void>> leaving(
+            @AuthenticationPrincipal UserDetails userDetails) {
         authService.leaving(userDetails.getUser());
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공하였습니다.", null));
     }
 
-    /** 화면 설계서에 없음
-    @GetMapping("/duplication-check")
-    @Operation(summary = "이메일 중복 체크", description = "해당 이메일이 이미 가입되어 있는지 확인합니다.")
-    public ResponseEntity<ApiResponse<String>> duplicationCheck(
-            @Parameter(description = "이메일", required = true) @RequestParam String email) {
-        return ResponseEntity.ok(ApiResponse.success("가입 가능한 이메일입니다.", null));
-    }
+    /**
+     * 화면 설계서에 없음 @GetMapping("/duplication-check") @Operation(summary = "이메일 중복 체크", description =
+     * "해당 이메일이 이미 가입되어 있는지 확인합니다.") public ResponseEntity<ApiResponse<String>>
+     * duplicationCheck( @Parameter(description = "이메일", required = true) @RequestParam String
+     * email) { return ResponseEntity.ok(ApiResponse.success("가입 가능한 이메일입니다.", null)); }
      */
-
 }

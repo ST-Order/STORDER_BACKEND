@@ -1,5 +1,10 @@
 package com.storder.order.auth.config;
 
+import com.storder.order.auth.config.jwt.JwtAccessDeniedHandler;
+import com.storder.order.auth.config.jwt.JwtAuthenticationEntryPoint;
+import com.storder.order.auth.config.jwt.JwtAuthenticationFilter;
+import com.storder.order.auth.config.jwt.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,13 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.storder.order.auth.config.jwt.JwtAccessDeniedHandler;
-import com.storder.order.auth.config.jwt.JwtAuthenticationEntryPoint;
-import com.storder.order.auth.config.jwt.JwtAuthenticationFilter;
-import com.storder.order.auth.config.jwt.JwtTokenProvider;
-
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +37,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint)
+            throws Exception {
         // CSRF 설정 비활성화
         http.csrf(csrf -> csrf.disable());
 
@@ -91,11 +91,16 @@ public class SecurityConfig {
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // 인증되지 않은 사용자에 대한 응답 설정
-        http.exceptionHandling(exception -> exception.accessDeniedHandler(jwtAccessDeniedHandler)
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint));
+        http.exceptionHandling(
+                exception ->
+                        exception
+                                .accessDeniedHandler(jwtAccessDeniedHandler)
+                                .authenticationEntryPoint(jwtAuthenticationEntryPoint));
 
         // 커스텀 필터를 ID/PW 기반으로 인증하는 기본 필터 앞에 넣어 먼저 인증 시도
-        http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(
+                new JwtAuthenticationFilter(jwtTokenProvider),
+                UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

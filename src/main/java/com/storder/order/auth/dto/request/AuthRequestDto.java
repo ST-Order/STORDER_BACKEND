@@ -1,10 +1,8 @@
 package com.storder.order.auth.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.regex.Pattern;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Builder;
 import lombok.Getter;
 
@@ -30,7 +28,8 @@ public class AuthRequestDto {
 
         @JsonIgnore
         public boolean isPasswordValid() {
-            String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.{4,16}$)[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]*$";
+            String PASSWORD_REGEX =
+                    "^(?=.*[A-Za-z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.{4,16}$)[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]*$";
             Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
 
             return PASSWORD_PATTERN.matcher(password).matches();
