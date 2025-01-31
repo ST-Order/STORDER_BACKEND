@@ -1,4 +1,4 @@
-package com.storder.order.auth.dto;
+package com.storder.order.auth.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
@@ -50,5 +50,16 @@ public class AuthResponseDto {
 
         @Schema(description = "리프레시 토큰 만료일자", example = "2024-07-27T14:25:39")
         private LocalDateTime refreshTokenExpiration;
+
+        public static TokenInfo create(String name, String accessToken, String refreshToken, LocalDateTime accessTokenExpiration, LocalDateTime refreshTokenExpiration) {
+            return TokenInfo.builder()
+                .name(name)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .accessTokenExpiration(accessTokenExpiration)
+                .refreshTokenExpiration(refreshTokenExpiration)
+                .build();
+        }
+
     }
 }
