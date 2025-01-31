@@ -1,6 +1,8 @@
 package com.storder.order.menu.controller;
 
+import com.storder.order.global.annotation.ApiErrorExceptionsExample;
 import com.storder.order.global.dto.ApiResponse;
+import com.storder.order.menu.docs.*;
 import com.storder.order.menu.dto.store.MenuRequestDto;
 import com.storder.order.menu.dto.store.MenuResponseDto;
 import com.storder.order.menu.dto.store.SoldOutMenuResponseDto;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class SellerMenuController {
 
     @Operation(summary = "등록된 메뉴 조회", description = "모든 등록된 메뉴를 조회합니다.")
+    @ApiErrorExceptionsExample(SellerGetMenuExceptionDocs.class)
     @GetMapping
     public ResponseEntity<ApiResponse<MenuResponseDto>> getAllMenus() {
         List<MenuResponseDto.MenuDto> menus =
@@ -46,13 +49,13 @@ public class SellerMenuController {
                                                         .optionAvailable(true)
                                                         .build()))
                                 .build());
-
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "메뉴 조회에 성공하였습니다.", MenuResponseDto.builder().menus(menus).build()));
     }
 
     @Operation(summary = "메뉴 등록", description = "새로운 메뉴를 등록합니다.")
+    @ApiErrorExceptionsExample(SellerPostMenuExceptionDocs.class)
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createMenu(
             @RequestBody MenuRequestDto menuRequestDto) {
@@ -60,6 +63,7 @@ public class SellerMenuController {
     }
 
     @Operation(summary = "메뉴 삭제", description = "특정 메뉴를 삭제합니다.")
+    @ApiErrorExceptionsExample(SellerMenuExceptionDocs.class)
     @DeleteMapping("/{menuId}")
     public ResponseEntity<ApiResponse<Void>> deleteMenu(
             @PathVariable @Parameter(description = "메뉴 ID") Long menuId) {
@@ -67,6 +71,7 @@ public class SellerMenuController {
     }
 
     @Operation(summary = "메뉴 수정", description = "특정 메뉴를 수정합니다.")
+    @ApiErrorExceptionsExample(SellerMenuExceptionDocs.class)
     @PutMapping("/{menuId}")
     public ResponseEntity<ApiResponse<Void>> updateMenu(
             @PathVariable @Parameter(description = "메뉴 ID") Long menuId,
@@ -75,6 +80,7 @@ public class SellerMenuController {
     }
 
     @Operation(summary = "품절 상태 변경", description = "특정 메뉴의 품절 상태를 변경합니다.")
+    @ApiErrorExceptionsExample(SellerSoldOutStatusExceptionDocs.class)
     @PatchMapping("/{menuId}/status")
     public ResponseEntity<ApiResponse<Void>> updateSoldOutStatus(
             @PathVariable @Parameter(description = "메뉴 ID") Long menuId,
@@ -83,6 +89,7 @@ public class SellerMenuController {
     }
 
     @Operation(summary = "품절 메뉴 조회", description = "품절된 모든 메뉴를 조회합니다.")
+    @ApiErrorExceptionsExample(SellerGetMenuExceptionDocs.class)
     @GetMapping("/sold-out")
     public ResponseEntity<ApiResponse<SoldOutMenuResponseDto>> getSoldOutMenus() {
         List<SoldOutMenuResponseDto.MenuDto> menus =
@@ -101,7 +108,6 @@ public class SellerMenuController {
                                 .price(5000)
                                 .isSoldOut(true)
                                 .build());
-
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "품절 메뉴 조회에 성공하였습니다.",
