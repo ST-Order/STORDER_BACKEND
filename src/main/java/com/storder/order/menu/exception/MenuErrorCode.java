@@ -26,7 +26,19 @@ public enum MenuErrorCode implements BaseErrorCode {
     MENU_NOT_FOUND(NOT_FOUND, "MENU_404_1", "해당 메뉴를 찾을 수 없습니다."),
 
     @ExplainError("품절 상태 변경 요청이 유효하지 않을 경우 발생하는 오류입니다.")
-    INVALID_SOLD_OUT_STATUS_REQUEST(BAD_REQUEST, "MENU_400_3", "유효하지 않은 품절 상태 변경 요청입니다.");
+    INVALID_SOLD_OUT_STATUS_REQUEST(BAD_REQUEST, "MENU_400_3", "유효하지 않은 품절 상태 변경 요청입니다."),
+
+    @ExplainError("리뷰 작성 시 유효하지 않은 데이터가 포함된 경우 발생하는 오류입니다.")
+    INVALID_REVIEW_DATA(BAD_REQUEST, "MENU_400_4", "유효하지 않은 리뷰 데이터입니다."),
+
+    @ExplainError("리뷰 작성 시 주문 내역이 없는 유저가 작성할 경우 발생하는 오류입니다.")
+    REVIEW_WITHOUT_ORDER(BAD_REQUEST, "MENU_400_5", "주문 내역이 없는 유저는 리뷰를 작성할 수 없습니다."),
+
+    @ExplainError("본인의 주문건에 대한 리뷰 작성이 아닐 경우 발생하는 오류입니다.")
+    REVIEW_NOT_FROM_USER_ORDER(BAD_REQUEST, "MENU_400_6", "본인의 주문에 대해 리뷰를 작성해야 합니다."),
+
+    @ExplainError("리뷰 작성 시 이미 작성된 리뷰가 존재하는 경우 발생하는 오류입니다.")
+    DUPLICATE_REVIEW(BAD_REQUEST, "MENU_400_7", "이미 작성된 리뷰가 존재합니다.");
 
     private final Integer status;
     private final String code;
