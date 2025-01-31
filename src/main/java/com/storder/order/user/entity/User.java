@@ -1,5 +1,7 @@
 package com.storder.order.user.entity;
 
+import static com.storder.order.user.entity.UserRole.*;
+
 import com.storder.order.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,4 +34,12 @@ public class User extends BaseEntity {
 
     @Column(name = "order_count", nullable = false)
     private Integer orderCount;
+
+    public static User createEmailVerifiedUser(String email) {
+        return User.builder()
+            .email(email)
+            .role(USER)
+            .orderCount(0)
+            .build();
+    }
 }
