@@ -54,8 +54,16 @@ public class SecurityConfig {
                                         "/api/v1/notifications/**",
                                         "/api/v1/menus/**",
                                         "/api/v1/pay/**",
-                                        "/h2-console/**",
-                                        "/api/v1/auth/**")
+                                        "/api/v1/orders/**",
+                                        "/api/v1/stores/**",
+                                        "/api/v1/seller/stores/**",
+                                        "/api/v1/seller/orders/**",
+                                        "/api/v1/mypage/**",
+                                        "/api/v1/sellers/**",
+                                        "/api/v1/reviews/**",
+                                        "/api/v1/payments/**",
+                                        "/api/v1/auth/**",
+                                        "/h2-console/**")
                                 .permitAll()
                                 .requestMatchers("/admin/**")
                                 .hasRole("ADMIN")
