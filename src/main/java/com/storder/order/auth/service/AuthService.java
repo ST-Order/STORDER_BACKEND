@@ -32,10 +32,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class AuthService {
 
-    @Value("${univcert.api.key}")
+	@Value("${univcert.api.key}")
 	private String apiKey;
 
-    private final JwtTokenProvider jwtTokenProvider;
+	private final JwtTokenProvider jwtTokenProvider;
 	private final UserRepository userRepository;
 
 	public Boolean sendCertificationCode(String email) throws IOException {
@@ -65,7 +65,7 @@ public class AuthService {
 		return AuthResponseDto.EmailVerification.of(response);
 	}
 
-    @Transactional
+	@Transactional
 	public void signUp(AuthRequestDto.SignUp request) {
 		if (!request.isPasswordValid()) {
 			throw new AuthException(NOT_VALID_PASSWORD);
@@ -75,36 +75,48 @@ public class AuthService {
 			throw new AuthException(NOT_EQUAL_PASSWORD_AND_PASSWORD_CHECK);
 		}
 
-		User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
-			() -> new AuthException(NOT_EXIST_VERIFIED_EMAIL));
+		User user = userRepository.findByEmail(request.getEmail())
+			.orElseThrow(() -> new AuthException(NOT_EXIST_VERIFIED_EMAIL));
+
+		if (isAlreadySignedUp(user)) {
+			throw new AuthException(ALREADY_SIGN_UP_EMAIL);
+		}
 		user.signUp(request);
 	}
 
-    public AuthResponseDto.TokenInfo login(AuthRequestDto.Login request) {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
-            () -> new AuthException(NOT_EXIST_LOGIN_EMAIL));
+	public AuthResponseDto.TokenInfo login(AuthRequestDto.Login request) {
+		User user = userRepository.findByEmail(request.getEmail())
+			.orElseThrow(() -> new AuthException(NOT_EXIST_LOGIN_EMAIL));
 
-        if (request.notEqualPassword(user.getPassword())) {
-            throw new AuthException(NOT_EQUAL_PASSWORD);
-        }
+		if (request.notEqualPassword(user.getPassword())) {
+			throw new AuthException(NOT_EQUAL_PASSWORD);
+		}
 
-        return jwtTokenProvider.generateToken(getAuthentication(user.getEmail(), user.getRole()), user.getName());
-    }
+		return jwtTokenProvider.generateToken(getAuthentication(user.getEmail(), user.getRole()), user.getName());
+	}
 
 	@Transactional
 	public void leaving(User user) {
 		userRepository.delete(user);
 	}
 
-    private Authentication getAuthentication(String email, UserRole role) {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role.getName()));
+	private Authentication getAuthentication(String email, UserRole role) {
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(role.getName()));
 
-        User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new AuthException(NOT_EXIST_EMAIL));
-        UserDetails userDetails = new UserDetails(user);
+		User user = userRepository.findByEmail(email)
+			.orElseThrow(() -> new AuthException(NOT_EXIST_EMAIL));
+		UserDetails userDetails = new UserDetails(user);
 
-        return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-    }
+		return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+	}
+
+	private boolean isAlreadySignedUp(User user) {
+		if (user.getPassword().equals("beforeSignUp") && user.getName().equals("beforeSignUp")) {
+			return false;
+		}
+
+		return true;
+	}
 
 }
