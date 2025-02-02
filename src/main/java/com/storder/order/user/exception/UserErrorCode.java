@@ -39,7 +39,16 @@ public enum UserErrorCode implements BaseErrorCode {
     INVALID_OLD_PASSWORD(BAD_REQUEST, "USER_400_12", "기존 비밀번호가 일치하지 않습니다."),
 
     @ExplainError("회원이 존재하지 않는 경우 발생하는 오류입니다.")
-    USER_NOT_FOUND(NOT_FOUND, "USER_404_1", "해당 회원이 존재하지 않습니다.");
+    USER_NOT_FOUND(NOT_FOUND, "USER_404_1", "해당 회원이 존재하지 않습니다."),
+
+    @ExplainError("유저의 이름이나 6개월간의 구매금액 정보를 조회할 수 없는 경우 발생하는 오류입니다.")
+    USER_INFO_NOT_FOUND(NOT_FOUND, "USER_404_2", "유저 정보 또는 구매 내역을 찾을 수 없습니다."),
+
+    @ExplainError("주문 내역을 조회할 때, 요청한 주문 내역이 없는 경우 발생하는 오류입니다.")
+    ORDER_HISTORY_NOT_FOUND(NOT_FOUND, "USER_404_3", "주문 내역을 찾을 수 없습니다."),
+
+    @ExplainError("주문 상세 정보를 조회할 때, 해당 주문 ID에 해당하는 상세 정보가 없는 경우 발생하는 오류입니다.")
+    ORDER_DETAIL_NOT_FOUND(NOT_FOUND, "USER_404_4", "주문 상세 정보를 찾을 수 없습니다.");
 
     private final Integer status;
     private final String code;
