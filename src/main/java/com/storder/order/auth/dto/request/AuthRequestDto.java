@@ -1,5 +1,6 @@
-package com.storder.order.auth.dto;
+package com.storder.order.auth.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.regex.Pattern;
 import lombok.Builder;
@@ -16,7 +17,7 @@ public class AuthRequestDto {
         @Schema(description = "이메일", example = "orieasy1@seoultech.ac.kr")
         private String email;
 
-        @Schema(description = "비밀번호(숫자와 특수문자 포함)", example = "test1234@@!")
+        @Schema(description = "비밀번호(영문 4~16자, 특수문자 1개 이상 포함)", example = "test1234@@!")
         private String password;
 
         @Schema(description = "비밀번호 확인", example = "test1234@@!")
@@ -25,19 +26,22 @@ public class AuthRequestDto {
         @Schema(description = "역할", example = "STUDENT")
         private String role;
 
-        private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+        @JsonIgnore
+        public boolean isPasswordValid() {
+            String PASSWORD_REGEX =
+                    "^(?=.*[A-Za-z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.{4,16}$)[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]*$";
+            Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
 
-        private static final String PASSWORD_REGEX =
-                "^(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).+$";
-        private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
-
-        public boolean isEmailValid() {
-            return EMAIL_PATTERN.matcher(email).matches();
+            return PASSWORD_PATTERN.matcher(password).matches();
         }
 
-        public boolean isPasswordValid() {
-            return PASSWORD_PATTERN.matcher(password).matches();
+        @JsonIgnore
+        public boolean isNotPasswordCheckValid() {
+            if (!passwordCheck.equals(password)) {
+                return true;
+            }
+
+            return false;
         }
     }
 
@@ -59,5 +63,14 @@ public class AuthRequestDto {
 
         @Schema(description = "비밀번호", example = "test1234@@!")
         private String password;
+
+        @JsonIgnore
+        public boolean notEqualPassword(String password) {
+            if (!this.password.equals(password)) {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
