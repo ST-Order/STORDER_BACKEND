@@ -2,12 +2,14 @@ package com.storder.order.store.docs;
 
 import com.storder.order.auth.exception.AuthErrorCode;
 import com.storder.order.auth.exception.AuthException;
+import com.storder.order.global.annotation.ExceptionDoc;
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.exception.GlobalCodeException;
 import com.storder.order.global.interfaces.SwaggerExampleExceptions;
 import com.storder.order.store.exception.StoreErrorCode;
 import com.storder.order.store.exception.StoreException;
 
+@ExceptionDoc
 public class SellerStoreOpenExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError

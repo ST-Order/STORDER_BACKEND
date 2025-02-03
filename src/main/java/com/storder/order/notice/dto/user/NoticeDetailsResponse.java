@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class NoticeDetailResponse {
+public class NoticeDetailsResponse {
 
     @Schema(description = "공지사항 ID", example = "1")
     private Long noticeId;
