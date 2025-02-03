@@ -1,5 +1,10 @@
 package com.storder.order.auth.config;
 
+import com.storder.order.auth.config.jwt.JwtAccessDeniedHandler;
+import com.storder.order.auth.config.jwt.JwtAuthenticationEntryPoint;
+import com.storder.order.auth.config.jwt.JwtAuthenticationFilter;
+import com.storder.order.auth.config.jwt.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,10 +14,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
@@ -26,7 +37,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint)
+            throws Exception {
         // CSRF 설정 비활성화
         http.csrf(csrf -> csrf.disable());
 
@@ -62,7 +75,10 @@ public class SecurityConfig {
                                         "/api/v1/sellers/**",
                                         "/api/v1/reviews/**",
                                         "/api/v1/payments/**",
-                                        "/api/v1/auth/**",
+                                        "/api/v1/auth/register",
+                                        "/api/v1/auth/certification",
+                                        "/api/v1/auth/verification",
+                                        "/api/v1/auth/login",
                                         "/h2-console/**")
                                 .permitAll()
                                 .requestMatchers("/admin/**")
@@ -73,6 +89,18 @@ public class SecurityConfig {
         // 세션 관리 설정 (Stateless로 설정)
         http.sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        // 인증되지 않은 사용자에 대한 응답 설정
+        http.exceptionHandling(
+                exception ->
+                        exception
+                                .accessDeniedHandler(jwtAccessDeniedHandler)
+                                .authenticationEntryPoint(jwtAuthenticationEntryPoint));
+
+        // 커스텀 필터를 ID/PW 기반으로 인증하는 기본 필터 앞에 넣어 먼저 인증 시도
+        http.addFilterBefore(
+                new JwtAuthenticationFilter(jwtTokenProvider),
+                UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
