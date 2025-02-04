@@ -25,6 +25,6 @@ public class MenuReviewExceptionDocs implements SwaggerExampleExceptions {
     public GlobalCodeException 사용자_실명_노출 = new ReviewException(ReviewErrorCode.USER_NAME_EXPOSED);
 
     @ExplainError
-    public GlobalCodeException 작성날짜가_미래인_리뷰 = new ReviewException(ReviewErrorCode.REVIEW_FUTURE_DATE);
-
+    public GlobalCodeException 작성날짜가_미래인_리뷰 =
+            new ReviewException(ReviewErrorCode.REVIEW_FUTURE_DATE);
 }

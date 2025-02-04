@@ -6,7 +6,6 @@ import com.storder.order.global.annotation.ExceptionDoc;
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.exception.GlobalCodeException;
 import com.storder.order.global.interfaces.SwaggerExampleExceptions;
-import com.storder.order.menu.exception.MenuErrorCode;
 import com.storder.order.menu.exception.ReviewErrorCode;
 
 @ExceptionDoc
@@ -32,5 +31,6 @@ public class PostUserReviewExceptionDocs implements SwaggerExampleExceptions {
             new GlobalCodeException(ReviewErrorCode.REVIEW_NOT_FROM_USER_ORDER);
 
     @ExplainError
-    public GlobalCodeException 이미_작성된_리뷰 = new GlobalCodeException(ReviewErrorCode.DUPLICATE_REVIEW);
+    public GlobalCodeException 이미_작성된_리뷰 =
+            new GlobalCodeException(ReviewErrorCode.DUPLICATE_REVIEW);
 }

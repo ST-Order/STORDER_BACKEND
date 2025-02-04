@@ -19,9 +19,9 @@ public class MenuListExceptionDocs implements SwaggerExampleExceptions {
     public GlobalCodeException 메뉴_존재하지_않음 = new MenuException(MenuErrorCode.MENU_NOT_FOUND);
 
     @ExplainError
-    public GlobalCodeException 인기메뉴_존재하지_않음 = new MenuException(MenuErrorCode.POPULAR_MENU_NOT_FOUND);
+    public GlobalCodeException 인기메뉴_존재하지_않음 =
+            new MenuException(MenuErrorCode.POPULAR_MENU_NOT_FOUND);
 
     @ExplainError
     public GlobalCodeException 대표메뉴_존재하지_않음 = new MenuException(MenuErrorCode.BEST_MENU_NOT_FOUND);
-
 }

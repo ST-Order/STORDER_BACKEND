@@ -13,7 +13,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum StoreErrorCode implements BaseErrorCode {
-
     @ExplainError("오픈 상태가 유효하지 않을 경우 발생하는 오류입니다.")
     INVALID_OPEN_STATUS(BAD_REQUEST, "STORE_400_1", "잘못된 오픈 상태 값입니다."),
 

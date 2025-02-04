@@ -13,12 +13,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum OrderErrorCode implements BaseErrorCode {
-
     @ExplainError("주문 상태가 유효하지 않을 경우 발생하는 오류입니다.")
     INVALID_ORDER_STATUS(BAD_REQUEST, "ORDER_400_1", "잘못된 주문 상태 값입니다."),
 
     @ExplainError("유효하지 않은 주문 상태 변경 요청일 때 발생하는 오류입니다.")
-    INVALID_ORDER_STATUS_CHANGE(BAD_REQUEST, "ORDER_400_2", "유효하지 않은 주문 상태 변경 요청입니다. 주문 상태는 UNPAY -> PAY -> COOKING -> READY 순으로 변경됩니다."),
+    INVALID_ORDER_STATUS_CHANGE(
+            BAD_REQUEST,
+            "ORDER_400_2",
+            "유효하지 않은 주문 상태 변경 요청입니다. 주문 상태는 UNPAY -> PAY -> COOKING -> READY 순으로 변경됩니다."),
 
     @ExplainError("주문한 메뉴 수량이 0 이하일 때 발생하는 오류입니다.")
     INVALID_ORDER_QUANTITY(BAD_REQUEST, "ORDER_400_3", "주문한 메뉴 수량이 0 이하입니다."),

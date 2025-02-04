@@ -12,8 +12,7 @@ import com.storder.order.menu.exception.MenuException;
 @ExceptionDoc
 public class SellerGetMenuExceptionDocs implements SwaggerExampleExceptions {
 
-    @ExplainError
-    public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
+    @ExplainError public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
 
     @ExplainError
     public GlobalCodeException 액세스_토큰_없음 = new AuthException(AuthErrorCode.ACCESS_TOKEN_NOT_EXIST);

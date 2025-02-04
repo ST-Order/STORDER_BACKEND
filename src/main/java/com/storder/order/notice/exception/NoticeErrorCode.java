@@ -43,7 +43,6 @@ public enum NoticeErrorCode implements BaseErrorCode {
     @ExplainError("공지사항이 존재하지 않을 경우 발생하는 오류입니다.")
     NOTICE_NOT_FOUND(NOT_FOUND, "NOTICE_404_1", "해당 공지사항이 존재하지 않습니다.");
 
-
     private final Integer status;
     private final String code;
     private final String reason;

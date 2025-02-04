@@ -15,8 +15,7 @@ public class SellerStoreOpenExceptionDocs implements SwaggerExampleExceptions {
     @ExplainError
     public GlobalCodeException 액세스_토큰_없음 = new AuthException(AuthErrorCode.ACCESS_TOKEN_NOT_EXIST);
 
-    @ExplainError
-    public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
+    @ExplainError public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
 
     @ExplainError
     public GlobalCodeException 유효하지_않은_토큰 = new AuthException(AuthErrorCode.INVALID_TOKEN);
@@ -32,5 +31,4 @@ public class SellerStoreOpenExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError
     public GlobalCodeException 이미_닫힌_식당 = new StoreException(StoreErrorCode.ALREADY_CLOSED);
-
 }

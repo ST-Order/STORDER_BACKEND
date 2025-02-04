@@ -14,8 +14,7 @@ import com.storder.order.store.exception.StoreException;
 @ExceptionDoc
 public class StoreHomeExceptionDocs implements SwaggerExampleExceptions {
 
-    @ExplainError
-    public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
+    @ExplainError public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
 
     @ExplainError
     public GlobalCodeException 액세스_토큰_없음 = new AuthException(AuthErrorCode.ACCESS_TOKEN_NOT_EXIST);
@@ -27,10 +26,9 @@ public class StoreHomeExceptionDocs implements SwaggerExampleExceptions {
     public GlobalCodeException 식당_존재하지_않음 = new StoreException(StoreErrorCode.STORE_NOT_FOUND);
 
     @ExplainError
-    public GlobalCodeException 식당_이미지_존재하지_않음 = new StoreException(StoreErrorCode.STORE_IMAGE_NOT_FOUND);
+    public GlobalCodeException 식당_이미지_존재하지_않음 =
+            new StoreException(StoreErrorCode.STORE_IMAGE_NOT_FOUND);
 
     @ExplainError
     public GlobalCodeException 공지사항_존재하지_않음 = new NoticeException(NoticeErrorCode.NOTICE_NOT_FOUND);
-
-
 }

@@ -1,15 +1,14 @@
 package com.storder.order.menu.exception;
 
+import static com.storder.order.global.consts.StorderStatic.BAD_REQUEST;
+
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.dto.ErrorReason;
 import com.storder.order.global.exception.BaseErrorCode;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.lang.reflect.Field;
 import java.util.Objects;
-
-import static com.storder.order.global.consts.StorderStatic.BAD_REQUEST;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
@@ -39,8 +38,8 @@ public enum ReviewErrorCode implements BaseErrorCode {
     REVIEW_FUTURE_DATE(BAD_REQUEST, "REVIEW_400_8", "리뷰 작성 날짜는 미래일 수 없습니다."),
 
     @ExplainError("별점 계산 중 충돌이 발생한 경우 발생하는 오류입니다.")
-    STAR_RATING_CONFLICT(BAD_REQUEST, "REVIEW_409_1", "별점 계산 중 충돌이 발생했습니다."),;
-
+    STAR_RATING_CONFLICT(BAD_REQUEST, "REVIEW_409_1", "별점 계산 중 충돌이 발생했습니다."),
+    ;
 
     private final Integer status;
     private final String code;
