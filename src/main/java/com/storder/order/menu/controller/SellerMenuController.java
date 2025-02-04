@@ -2,7 +2,10 @@ package com.storder.order.menu.controller;
 
 import com.storder.order.global.annotation.ApiErrorExceptionsExample;
 import com.storder.order.global.dto.ApiResponse;
-import com.storder.order.menu.docs.*;
+import com.storder.order.menu.docs.seller.SellerGetMenuExceptionDocs;
+import com.storder.order.menu.docs.seller.SellerMenuExceptionDocs;
+import com.storder.order.menu.docs.seller.SellerPostMenuExceptionDocs;
+import com.storder.order.menu.docs.seller.SellerSoldOutStatusExceptionDocs;
 import com.storder.order.menu.dto.store.MenuRequestDto;
 import com.storder.order.menu.dto.store.MenuResponseDto;
 import com.storder.order.menu.dto.store.SoldOutMenuResponseDto;

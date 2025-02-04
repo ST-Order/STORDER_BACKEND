@@ -1,7 +1,12 @@
 package com.storder.order.menu.controller;
 
+import com.storder.order.global.annotation.ApiErrorExceptionsExample;
 import com.storder.order.global.dto.ApiResponse;
-import com.storder.order.menu.dto.user.MenuDetailResponse;
+import com.storder.order.menu.docs.user.MenuDetailsExceptionDocs;
+import com.storder.order.menu.docs.user.MenuListExceptionDocs;
+import com.storder.order.menu.docs.user.MenuReviewExceptionDocs;
+import com.storder.order.menu.docs.user.PopularMenuExceptionDocs;
+import com.storder.order.menu.dto.user.MenuDetailsResponse;
 import com.storder.order.menu.dto.user.MenuListResponse;
 import com.storder.order.menu.dto.user.MenuReviewResponse;
 import com.storder.order.menu.dto.user.PopularMenuResponse;
@@ -24,6 +29,7 @@ public class MenuController {
 
     @GetMapping("/popularity")
     @Operation(summary = "인기 메뉴 목록 조회", description = "인기 메뉴 목록을 조회합니다.")
+    @ApiErrorExceptionsExample(PopularMenuExceptionDocs.class)
     public ResponseEntity<ApiResponse<List<PopularMenuResponse>>> getPopularMenus() {
 
         // List<PopularMenuResponse> popularMenu = null;
@@ -32,6 +38,7 @@ public class MenuController {
 
     @GetMapping("/{storeId}/menus")
     @Operation(summary = "메뉴 목록 조회", description = "선택한 식당의 메뉴 목록을 조회합니다.")
+    @ApiErrorExceptionsExample(MenuListExceptionDocs.class)
     public ResponseEntity<ApiResponse<MenuListResponse>> getMenus(
             @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId) {
 
@@ -41,7 +48,8 @@ public class MenuController {
 
     @GetMapping("/{storeId}/menus/{menuId}/details")
     @Operation(summary = "메뉴 상세 조회", description = "선택한 메뉴의 상세 내용을 조회합니다.")
-    public ResponseEntity<ApiResponse<MenuDetailResponse>> getMenuDetails(
+    @ApiErrorExceptionsExample(MenuDetailsExceptionDocs.class)
+    public ResponseEntity<ApiResponse<MenuDetailsResponse>> getMenuDetails(
             @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId,
             @Parameter(description = "메뉴 ID", example = "1") @PathVariable Long menuId) {
 
@@ -51,6 +59,7 @@ public class MenuController {
 
     @GetMapping("/{storeId}/menus/{menuId}/reviews")
     @Operation(summary = "메뉴 리뷰 조회", description = "선택한 메뉴의 리뷰 목록을 조회합니다.")
+    @ApiErrorExceptionsExample(MenuReviewExceptionDocs.class)
     public ResponseEntity<ApiResponse<MenuReviewResponse>> getMenuReviews(
             @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId,
             @Parameter(description = "메뉴 ID", example = "1") @PathVariable Long menuId) {

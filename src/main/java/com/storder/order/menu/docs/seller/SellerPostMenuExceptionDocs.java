@@ -1,4 +1,4 @@
-package com.storder.order.menu.docs;
+package com.storder.order.menu.docs.seller;
 
 import com.storder.order.auth.exception.AuthErrorCode;
 import com.storder.order.auth.exception.AuthException;
@@ -10,10 +10,8 @@ import com.storder.order.menu.exception.MenuErrorCode;
 import com.storder.order.menu.exception.MenuException;
 
 @ExceptionDoc
-public class SellerGetMenuExceptionDocs implements SwaggerExampleExceptions {
-
-    @ExplainError
-    public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
+public class SellerPostMenuExceptionDocs implements SwaggerExampleExceptions {
+    @ExplainError public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
 
     @ExplainError
     public GlobalCodeException 액세스_토큰_없음 = new AuthException(AuthErrorCode.ACCESS_TOKEN_NOT_EXIST);
@@ -23,4 +21,11 @@ public class SellerGetMenuExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError
     public GlobalCodeException 메뉴_관리_권한_없음 = new MenuException(MenuErrorCode.NOT_MENU_OWNER);
+
+    @ExplainError
+    public GlobalCodeException 메뉴_등록_데이터_유효하지_않음 =
+            new MenuException(MenuErrorCode.INVALID_MENU_DATA);
+
+    @ExplainError
+    public GlobalCodeException 메뉴_이름_중복 = new MenuException(MenuErrorCode.DUPLICATE_MENU_NAME);
 }

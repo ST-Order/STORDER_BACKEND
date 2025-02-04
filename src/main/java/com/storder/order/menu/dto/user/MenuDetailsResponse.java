@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Schema(description = "메뉴 상세 조회 응답 DTO")
 @Builder
-public class MenuDetailResponse {
+public class MenuDetailsResponse {
 
     @Schema(description = "메뉴 ID", example = "1")
     private Long menuId;
