@@ -8,32 +8,34 @@ import com.storder.order.user.dto.user.OrderDetailResponseDto;
 import com.storder.order.user.dto.user.OrderResponseDto;
 import com.storder.order.user.dto.user.ReviewRequestDto;
 import com.storder.order.user.dto.user.UserInfoResponseDto;
+import com.storder.order.user.entity.UserDetails;
+import com.storder.order.user.service.UserService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "UserPage Controller", description = "[유저] 사용자 마이페이지 관련 API")
+@RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
 
     @Operation(
             summary = "사용자 이름과 6개월 구매 통계 조회",
             description = "사용자의 이름과 해당 사용자 6개월간 구매 금액 및 횟수를 조회합니다.")
     @ApiErrorExceptionsExample(GetUserPageExceptionDocs.class)
     @GetMapping("/mypage")
-    public ResponseEntity<ApiResponse<UserInfoResponseDto>> getMyPageSummary() {
-        UserInfoResponseDto userInfo =
-                UserInfoResponseDto.builder()
-                        .name("가다니")
-                        .totalOrderPrice(19000)
-                        .totalOrderCount(3)
-                        .build();
-
+    public ResponseEntity<ApiResponse<UserInfoResponseDto>> getMyPageSummary(@AuthenticationPrincipal UserDetails userDetails) {
+        UserInfoResponseDto userInfo = userService.getUserTotalOrderAmount(userDetails.getUser().getUserId());
         return ResponseEntity.ok(ApiResponse.success("사용자 정보 조회에 성공하였습니다.", userInfo));
     }
 
