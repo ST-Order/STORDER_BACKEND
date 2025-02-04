@@ -17,7 +17,7 @@ public enum NoticeErrorCode implements BaseErrorCode {
     INVALID_NOTICE_CATEGORY(BAD_REQUEST, "NOTICE_400_1", "잘못된 공지사항 카테고리입니다."),
 
     @ExplainError("공지사항 노출 시간이 유효하지 않을 경우 발생하는 오류입니다.")
-    INVALID_NOTICE_DISPLAY_TIME(BAD_REQUEST, "NOTICE_400_2", "잘못된 공지사항 노출 시간입니다."),
+    INVALID_NOTICE_EXPOSURE_TIME(BAD_REQUEST, "NOTICE_400_2", "잘못된 공지사항 노출 시간입니다."),
 
     @ExplainError("공지사항 제목이 비어있을 경우 발생하는 오류입니다.")
     EMPTY_NOTICE_TITLE(BAD_REQUEST, "NOTICE_400_3", "공지사항 제목이 비어있습니다."),

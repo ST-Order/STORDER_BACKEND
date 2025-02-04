@@ -18,7 +18,7 @@ public class NoticeListExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError
     public GlobalCodeException 잘못된_공지사항_노출시간 =
-            new NoticeException(NoticeErrorCode.INVALID_NOTICE_DISPLAY_TIME);
+            new NoticeException(NoticeErrorCode.INVALID_NOTICE_EXPOSURE_TIME);
 
     @ExplainError
     public GlobalCodeException 공지사항_존재하지_않음 = new NoticeException(NoticeErrorCode.NOTICE_NOT_FOUND);
