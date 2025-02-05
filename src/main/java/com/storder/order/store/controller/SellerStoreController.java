@@ -1,6 +1,8 @@
 package com.storder.order.store.controller;
 
+import com.storder.order.global.annotation.ApiErrorExceptionsExample;
 import com.storder.order.global.dto.ApiResponse;
+import com.storder.order.store.docs.SellerStoreOpenExceptionDocs;
 import com.storder.order.store.dto.seller.OpenCloseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,6 +22,7 @@ public class SellerStoreController {
 
     @PatchMapping("/{storeId}/open")
     @Operation(summary = "식당 오픈", description = "식당을 오픈 상태로 전환합니다.(영업시작)")
+    @ApiErrorExceptionsExample(SellerStoreOpenExceptionDocs.class)
     public ResponseEntity<ApiResponse<OpenCloseResponse>> storeOpen(
             @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId) {
         return ResponseEntity.ok(ApiResponse.success("식당을 오픈하였습니다.", null));
@@ -27,6 +30,7 @@ public class SellerStoreController {
 
     @PatchMapping("/{storeId}/close")
     @Operation(summary = "식당 마감", description = "식당을 영업 종료합니다.")
+    @ApiErrorExceptionsExample(SellerStoreOpenExceptionDocs.class)
     public ResponseEntity<ApiResponse<OpenCloseResponse>> storeClose(
             @Parameter(description = "식당 ID", example = "1") @PathVariable Long storeId) {
         return ResponseEntity.ok(ApiResponse.success("식당 영업 종료하였습니다.", null));

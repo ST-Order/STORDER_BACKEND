@@ -13,32 +13,42 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MenuErrorCode implements BaseErrorCode {
-    @ExplainError("메뉴 관리에 대한 권한이 없을 경우 발생하는 오류입니다.")
-    NOT_MENU_OWNER(FORBIDDEN, "MENU_403_1", "메뉴 관리 권한이 없습니다."),
-
     @ExplainError("메뉴 등록 요청 시 유효하지 않은 데이터가 포함된 경우 발생하는 오류입니다.")
     INVALID_MENU_DATA(BAD_REQUEST, "MENU_400_1", "유효하지 않은 메뉴 데이터입니다."),
 
-    @ExplainError("메뉴 등록 요청 시 중복된 메뉴명이 존재하는 경우 발생하는 오류입니다.")
+    @ExplainError("메뉴 등록 요청 시 중복된 메뉴가 존재하는 경우 발생하는 오류입니다.")
     DUPLICATE_MENU_NAME(BAD_REQUEST, "MENU_400_2", "이미 존재하는 메뉴명입니다."),
 
-    @ExplainError("요청에 해당하는 메뉴가 존재하지 않는 경우 발생하는 오류입니다.")
-    MENU_NOT_FOUND(NOT_FOUND, "MENU_404_1", "해당 메뉴를 찾을 수 없습니다."),
+    @ExplainError("메뉴 이름이 비어있거나 너무 길 경우 발생하는 오류입니다.")
+    INVALID_MENU_NAME(BAD_REQUEST, "MENU_400_3", "유효하지 않은 메뉴 이름입니다. (메뉴이름은 100자 이하여야 합니다)"),
+
+    @ExplainError("메뉴 가격이 0이하일 경우 발생하는 오류입니다.")
+    INVALID_MENU_PRICE(BAD_REQUEST, "MENU_400_4", "메뉴 가격이 0원 이하입니다."),
+
+    @ExplainError("메뉴 설명이 너무 길 경우 발생하는 오류입니다.")
+    INVALID_MENU_DESCRIPTION(BAD_REQUEST, "MENU_400_5", "메뉴 설명은 500자 이하여야 합니다."),
 
     @ExplainError("품절 상태 변경 요청이 유효하지 않을 경우 발생하는 오류입니다.")
     INVALID_SOLD_OUT_STATUS_REQUEST(BAD_REQUEST, "MENU_400_3", "유효하지 않은 품절 상태 변경 요청입니다."),
 
-    @ExplainError("리뷰 작성 시 유효하지 않은 데이터가 포함된 경우 발생하는 오류입니다.")
-    INVALID_REVIEW_DATA(BAD_REQUEST, "MENU_400_4", "유효하지 않은 리뷰 데이터입니다."),
+    @ExplainError("메뉴 관리에 대한 권한이 없을 경우 발생하는 오류입니다.")
+    NOT_MENU_OWNER(FORBIDDEN, "MENU_403_1", "메뉴 관리 권한이 없습니다."),
 
-    @ExplainError("리뷰 작성 시 주문 내역이 없는 유저가 작성할 경우 발생하는 오류입니다.")
-    REVIEW_WITHOUT_ORDER(BAD_REQUEST, "MENU_400_5", "주문 내역이 없는 유저는 리뷰를 작성할 수 없습니다."),
+    @ExplainError("메뉴가 존재하지 않는 경우 발생하는 오류입니다.")
+    MENU_NOT_FOUND(NOT_FOUND, "MENU_404_1", "메뉴를 찾을 수 없습니다."),
 
-    @ExplainError("본인의 주문건에 대한 리뷰 작성이 아닐 경우 발생하는 오류입니다.")
-    REVIEW_NOT_FROM_USER_ORDER(BAD_REQUEST, "MENU_400_6", "본인의 주문에 대해 리뷰를 작성해야 합니다."),
+    @ExplainError("인기 메뉴가 존재하지 않는 경우 발생하는 오류입니다.")
+    POPULAR_MENU_NOT_FOUND(NOT_FOUND, "MENU_404_2", "인기 메뉴를 찾을 수 없습니다."),
 
-    @ExplainError("리뷰 작성 시 이미 작성된 리뷰가 존재하는 경우 발생하는 오류입니다.")
-    DUPLICATE_REVIEW(BAD_REQUEST, "MENU_400_7", "이미 작성된 리뷰가 존재합니다.");
+    @ExplainError("대표 메뉴가 존재하지 않는 경우 발생하는 오류입니다")
+    BEST_MENU_NOT_FOUND(NOT_FOUND, "MENU_404_3", "대표 메뉴를 찾을 수 없습니다."),
+
+    // 주문수가 동일할 경우에 대한 논의 필요
+    @ExplainError("인기 메뉴는 두 개 이상일 수 없습니다.")
+    MULTIPLE_POPULAR_MENU(CONFLICT, "MENU_409_1", "인기 메뉴는 두 개 이상일 수 없습니다."),
+
+    @ExplainError("대표 메뉴는 두 개 이상일 수 없습니다.")
+    MULTIPLE_BEST_MENU(CONFLICT, "MENU_409_2", "대표 메뉴는 두 개 이상일 수 없습니다.");
 
     private final Integer status;
     private final String code;

@@ -6,7 +6,7 @@ import com.storder.order.global.annotation.ExceptionDoc;
 import com.storder.order.global.annotation.ExplainError;
 import com.storder.order.global.exception.GlobalCodeException;
 import com.storder.order.global.interfaces.SwaggerExampleExceptions;
-import com.storder.order.menu.exception.MenuErrorCode;
+import com.storder.order.menu.exception.ReviewErrorCode;
 
 @ExceptionDoc
 public class PostUserReviewExceptionDocs implements SwaggerExampleExceptions {
@@ -20,16 +20,17 @@ public class PostUserReviewExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError
     public GlobalCodeException 리뷰_작성_유효하지_않은_데이터 =
-            new GlobalCodeException(MenuErrorCode.INVALID_REVIEW_DATA);
+            new GlobalCodeException(ReviewErrorCode.INVALID_REVIEW_DATA);
 
     @ExplainError
     public GlobalCodeException 주문_내역_없는_유저_리뷰_작성 =
-            new GlobalCodeException(MenuErrorCode.REVIEW_WITHOUT_ORDER);
+            new GlobalCodeException(ReviewErrorCode.REVIEW_WITHOUT_ORDER);
 
     @ExplainError
     public GlobalCodeException 본인_주문_아닌_리뷰 =
-            new GlobalCodeException(MenuErrorCode.REVIEW_NOT_FROM_USER_ORDER);
+            new GlobalCodeException(ReviewErrorCode.REVIEW_NOT_FROM_USER_ORDER);
 
     @ExplainError
-    public GlobalCodeException 이미_작성된_리뷰 = new GlobalCodeException(MenuErrorCode.DUPLICATE_REVIEW);
+    public GlobalCodeException 이미_작성된_리뷰 =
+            new GlobalCodeException(ReviewErrorCode.DUPLICATE_REVIEW);
 }

@@ -14,7 +14,25 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum StoreErrorCode implements BaseErrorCode {
     @ExplainError("오픈 상태가 유효하지 않을 경우 발생하는 오류입니다.")
-    INVALID_OPENSTATUS(BAD_REQUEST, "STORE_400_1", "잘못된 오픈 상태 값입니다.");
+    INVALID_OPEN_STATUS(BAD_REQUEST, "STORE_400_1", "잘못된 오픈 상태 값입니다."),
+
+    @ExplainError("식당 이미지의 url형식이 유효하지 않을 경우 발생하는 오류입니다.")
+    INVALID_STORE_IMAGE_URL(BAD_REQUEST, "STORE_400_2", "잘못된 식당 이미지 url입니다."),
+
+    @ExplainError("식당 오픈 요청 시 이미 오픈 상태일 경우 발생하는 오류입니다.")
+    ALREADY_OPENED(BAD_REQUEST, "STORE_400_3", "이미 오픈한 상태입니다."),
+
+    @ExplainError("식당 마감 요청 시 이미 마감 상태일 경우 발생하는 오류입니다.")
+    ALREADY_CLOSED(BAD_REQUEST, "STORE_400_4", "이미 마감한 상태입니다."),
+
+    @ExplainError("로그인한 사용자가 자신이 소유하지 않은 가게를 수정하려고 할 때 발생하는 오류입니다.")
+    NOT_STORE_OWNER(FORBIDDEN, "STORE_403_1", "식당의 소유자가 아닙니다."),
+
+    @ExplainError("식당이 존재하지 않을 경우 발생하는 오류입니다.")
+    STORE_NOT_FOUND(NOT_FOUND, "STORE_404_1", "식당을 찾을 수 없습니다."),
+
+    @ExplainError("식당 이미지가 존재하지 않을 경우 발생하는 오류입니다.")
+    STORE_IMAGE_NOT_FOUND(NOT_FOUND, "STORE_404_2", "식당 이미지를 찾을 수 없습니다.");
 
     private final Integer status;
     private final String code;

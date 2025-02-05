@@ -1,7 +1,10 @@
 package com.storder.order.notice.controller;
 
+import com.storder.order.global.annotation.ApiErrorExceptionsExample;
 import com.storder.order.global.dto.ApiResponse;
-import com.storder.order.notice.dto.user.NoticeDetailResponse;
+import com.storder.order.notice.docs.NoticeDetailsExceptionDocs;
+import com.storder.order.notice.docs.NoticeListExceptionDocs;
+import com.storder.order.notice.dto.user.NoticeDetailsResponse;
 import com.storder.order.notice.dto.user.NoticeListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,6 +24,7 @@ public class NoticeController {
 
     @GetMapping
     @Operation(summary = "공지사항 목록 조회", description = "등록된 공지사항 목록을 조회합니다.")
+    @ApiErrorExceptionsExample(NoticeListExceptionDocs.class)
     public ResponseEntity<ApiResponse<NoticeListResponse>> getAllNotifications() {
 
         // List<NoticeListResponse> noticeList = null;
@@ -29,7 +33,8 @@ public class NoticeController {
 
     @GetMapping("/{noticeId}/details")
     @Operation(summary = "공지사항 상세 조회", description = "특정 공지사항의 상세 정보를 조회합니다.")
-    public ResponseEntity<ApiResponse<NoticeDetailResponse>> getNotificationDetails(
+    @ApiErrorExceptionsExample(NoticeDetailsExceptionDocs.class)
+    public ResponseEntity<ApiResponse<NoticeDetailsResponse>> getNotificationDetails(
             @Parameter(description = "공지사항 ID", example = "1") @PathVariable Long noticeId) {
 
         // NoticeListResponse noticeDetail = null;

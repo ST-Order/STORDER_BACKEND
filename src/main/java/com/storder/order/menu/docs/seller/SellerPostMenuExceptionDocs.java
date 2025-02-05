@@ -1,4 +1,4 @@
-package com.storder.order.menu.docs;
+package com.storder.order.menu.docs.seller;
 
 import com.storder.order.auth.exception.AuthErrorCode;
 import com.storder.order.auth.exception.AuthException;
