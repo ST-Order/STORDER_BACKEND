@@ -12,16 +12,14 @@ import com.storder.order.global.interfaces.SwaggerExampleExceptions;
 @ExceptionDoc
 public class LeavingExceptionDocs implements SwaggerExampleExceptions {
 
-	@ExplainError
-	public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
+    @ExplainError public GlobalCodeException 토큰_만료 = new AuthException(AuthErrorCode.TOKEN_EXPIRED);
 
-	@ExplainError
-	public GlobalCodeException 액세스_토큰이_Bearer로_시작하지_않음 = new AuthException(NOT_START_WITH_BEARER);
+    @ExplainError
+    public GlobalCodeException 액세스_토큰이_Bearer로_시작하지_않음 = new AuthException(NOT_START_WITH_BEARER);
 
-	@ExplainError
-	public GlobalCodeException 액세스_토큰_없음 = new AuthException(AuthErrorCode.ACCESS_TOKEN_NOT_EXIST);
+    @ExplainError
+    public GlobalCodeException 액세스_토큰_없음 = new AuthException(AuthErrorCode.ACCESS_TOKEN_NOT_EXIST);
 
-	@ExplainError
-	public GlobalCodeException 토큰_유효하지_않음 = new AuthException(AuthErrorCode.INVALID_TOKEN);
-
+    @ExplainError
+    public GlobalCodeException 토큰_유효하지_않음 = new AuthException(AuthErrorCode.INVALID_TOKEN);
 }

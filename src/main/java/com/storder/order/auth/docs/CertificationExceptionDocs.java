@@ -11,7 +11,6 @@ import com.storder.order.global.interfaces.SwaggerExampleExceptions;
 @ExceptionDoc
 public class CertificationExceptionDocs implements SwaggerExampleExceptions {
 
-	@ExplainError
-	public GlobalCodeException 인증_이메일_전송_에러 = new AuthException(SEND_CERTIFICATION_CODE_ERROR);
-
+    @ExplainError
+    public GlobalCodeException 인증_이메일_전송_에러 = new AuthException(SEND_CERTIFICATION_CODE_ERROR);
 }

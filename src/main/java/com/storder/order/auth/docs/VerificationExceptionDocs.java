@@ -11,7 +11,6 @@ import com.storder.order.global.interfaces.SwaggerExampleExceptions;
 @ExceptionDoc
 public class VerificationExceptionDocs implements SwaggerExampleExceptions {
 
-	@ExplainError
-	public GlobalCodeException 인증번호_불일치 = new AuthException(VERIFY_CERTIFICATION_CODE_ERROR);
-
+    @ExplainError
+    public GlobalCodeException 인증번호_불일치 = new AuthException(VERIFY_CERTIFICATION_CODE_ERROR);
 }
