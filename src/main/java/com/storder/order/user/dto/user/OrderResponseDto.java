@@ -10,6 +10,12 @@ import lombok.Getter;
 @Builder
 public class OrderResponseDto {
 
+    @Schema(description = "해당 기간 동안의 총 주문 금액")
+    private int totalPrice;
+
+    @Schema(description = "해당 기간 동안의 총 주문 횟수")
+    private int totalOrderCount;
+
     @Schema(description = "주문 리스트")
     private List<OrderDto> orders;
 

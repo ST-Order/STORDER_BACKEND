@@ -10,9 +10,15 @@ import org.springframework.stereotype.Service;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public Integer getTotalOrderAmountForLastSixMonths(Long userId) {
-        LocalDateTime sixMonthsAgo = LocalDateTime.now().minusMonths(6);
+    public int getTotalOrderAmountForPeriod(Long userId, int months) {
+        LocalDateTime startDate = LocalDateTime.now().minusMonths(months);
         LocalDateTime now = LocalDateTime.now();
-        return orderRepository.findTotalOrderAmountByUserAndPeriod(userId, sixMonthsAgo, now);
+        return orderRepository.findTotalOrderAmountByUserAndPeriod(userId, startDate, now);
+    }
+
+    public int getTotalOrderCountForPeriod(Long userId, int months) {
+        LocalDateTime startDate = LocalDateTime.now().minusMonths(months);
+        LocalDateTime now = LocalDateTime.now();
+        return orderRepository.findTotalOrderCountByUserAndPeriod(userId, startDate, now);
     }
 }

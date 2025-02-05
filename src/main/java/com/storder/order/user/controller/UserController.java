@@ -10,14 +10,12 @@ import com.storder.order.user.dto.user.ReviewRequestDto;
 import com.storder.order.user.dto.user.UserInfoResponseDto;
 import com.storder.order.user.entity.UserDetails;
 import com.storder.order.user.service.UserService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -43,34 +41,12 @@ public class UserController {
     @ApiErrorExceptionsExample(GetUserPageExceptionDocs.class)
     @GetMapping("/mypage/orders/list")
     public ResponseEntity<ApiResponse<OrderResponseDto>> getOrderList(
+            @AuthenticationPrincipal UserDetails userDetails,
             @RequestParam @Parameter(description = "조회할 월", example = "2024-10") String month) {
-        List<OrderResponseDto.OrderDto> orders =
-                List.of(
-                        OrderResponseDto.OrderDto.builder()
-                                .menuImage("https://example.com/images/food1.jpg")
-                                .orderTime(LocalDateTime.of(2024, 10, 4, 18, 3, 0, 0))
-                                .orderStatus("COOKING")
-                                .menuName("경성카츠")
-                                .price(9000)
-                                .build(),
-                        OrderResponseDto.OrderDto.builder()
-                                .menuImage("https://example.com/images/food2.jpg")
-                                .orderTime(LocalDateTime.of(2024, 10, 3, 18, 15, 0, 0))
-                                .orderStatus("READY")
-                                .menuName("바비든든")
-                                .price(10000)
-                                .build(),
-                        OrderResponseDto.OrderDto.builder()
-                                .menuImage("https://example.com/images/food3.jpg")
-                                .orderTime(LocalDateTime.of(2024, 10, 1, 13, 0, 0, 0))
-                                .orderStatus("READY")
-                                .menuName("경성카츠")
-                                .price(9000)
-                                .build());
 
-        return ResponseEntity.ok(
-                ApiResponse.success(
-                        "주문 내역 조회에 성공하였습니다.", OrderResponseDto.builder().orders(orders).build()));
+        OrderResponseDto orderList =
+                userService.getUserOrderDataList(userDetails.getUser().getUserId());
+        return ResponseEntity.ok(ApiResponse.success("주문 내역 조회에 성공하였습니다.", orderList));
     }
 
     @Operation(summary = "주문 상세 조회", description = "특정 주문에 대한 상세 정보를 조회합니다.")

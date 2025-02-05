@@ -15,4 +15,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             @Param("userId") Long userId,
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate);
+
+    @Query(
+            "SELECT COUNT(o) FROM Order o "
+                    + "WHERE o.user.userId = :userId "
+                    + "AND o.payedAt BETWEEN :startDate AND :endDate")
+    Integer findTotalOrderCountByUserAndPeriod(
+            @Param("userId") Long userId,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate);
 }
