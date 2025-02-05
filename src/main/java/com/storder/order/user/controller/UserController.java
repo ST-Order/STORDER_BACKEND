@@ -32,8 +32,10 @@ public class UserController {
             description = "사용자의 이름과 해당 사용자 6개월간 구매 금액 및 횟수를 조회합니다.")
     @ApiErrorExceptionsExample(GetUserPageExceptionDocs.class)
     @GetMapping("/mypage")
-    public ResponseEntity<ApiResponse<UserInfoResponseDto>> getMyPageSummary(@AuthenticationPrincipal UserDetails userDetails) {
-        UserInfoResponseDto userInfo = userService.getUserTotalOrderAmount(userDetails.getUser().getUserId());
+    public ResponseEntity<ApiResponse<UserInfoResponseDto>> getMyPageSummary(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        UserInfoResponseDto userInfo =
+                userService.getUserTotalOrderAmount(userDetails.getUser().getUserId());
         return ResponseEntity.ok(ApiResponse.success("사용자 정보 조회에 성공하였습니다.", userInfo));
     }
 
