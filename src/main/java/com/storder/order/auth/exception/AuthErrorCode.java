@@ -25,7 +25,7 @@ public enum AuthErrorCode implements BaseErrorCode {
     NOT_EXIST_LOGIN_EMAIL(BAD_REQUEST, "AUTH_400_5", "가입하지 않은 이메일이거나 잘못된 비밀번호입니다."),
     @ExplainError("로그인 시 비밀번호가 일치하지 않으면 발생하는 오류입니다.")
     NOT_EQUAL_PASSWORD(BAD_REQUEST, "AUTH_400_6", "가입하지 않은 이메일이거나 잘못된 비밀번호입니다."),
-    @ExplainError("로그인 시 accessToken이 Bearer로 시작하지 않으면 발생하는 오류입니다.")
+    @ExplainError("accessToken이 Bearer로 시작하지 않으면 발생하는 오류입니다.")
     NOT_START_WITH_BEARER(BAD_REQUEST, "AUTH_400_7", "accessToken은 Bearer로 시작해야합니다."),
     @ExplainError("회원가입 시 이메일이 기존에 가입되어 있으면 발생하는 오류입니다.")
     ALREADY_SIGN_UP_EMAIL(BAD_REQUEST, "AUTH_400_8", "이미 가입한 이메일입니다."),
