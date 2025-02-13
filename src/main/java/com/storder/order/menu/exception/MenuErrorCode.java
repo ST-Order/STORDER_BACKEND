@@ -48,7 +48,10 @@ public enum MenuErrorCode implements BaseErrorCode {
     MULTIPLE_POPULAR_MENU(CONFLICT, "MENU_409_1", "인기 메뉴는 두 개 이상일 수 없습니다."),
 
     @ExplainError("대표 메뉴는 두 개 이상일 수 없습니다.")
-    MULTIPLE_BEST_MENU(CONFLICT, "MENU_409_2", "대표 메뉴는 두 개 이상일 수 없습니다.");
+    MULTIPLE_BEST_MENU(CONFLICT, "MENU_409_2", "대표 메뉴는 두 개 이상일 수 없습니다."),
+
+    @ExplainError("메뉴를 조회하는 중 데이터베이스 오류가 발생했습니다.")
+    MENU_DATABASE_ERROR(INTERNAL_SERVER, "MENU_500", "메뉴를 조회하는 중 데이터베이스 오류가 발생했습니다.");
 
     private final Integer status;
     private final String code;
