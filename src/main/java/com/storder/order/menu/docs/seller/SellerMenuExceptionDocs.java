@@ -24,4 +24,19 @@ public class SellerMenuExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError
     public GlobalCodeException 해당하는_메뉴_없음 = new MenuException(MenuErrorCode.MENU_NOT_FOUND);
+
+    @ExplainError
+    public GlobalCodeException 메뉴_이름_유효하지_않음 = new MenuException(MenuErrorCode.INVALID_MENU_NAME);
+
+    @ExplainError
+    public GlobalCodeException 가격_유효하지_않음 = new MenuException(MenuErrorCode.INVALID_MENU_PRICE);
+
+    @ExplainError
+    public GlobalCodeException 메뉴_설명_초과 = new MenuException(MenuErrorCode.INVALID_MENU_DESCRIPTION);
+
+    @ExplainError
+    public GlobalCodeException 메뉴_이름_중복 = new MenuException(MenuErrorCode.DUPLICATE_MENU_NAME);
+
+    @ExplainError
+    public GlobalCodeException 메뉴_등록_실패 = new MenuException(MenuErrorCode.MENU_DATABASE_ERROR);
 }
