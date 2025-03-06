@@ -25,7 +25,7 @@ jobs:
 
       # 3. Gradle 캐싱
       - name: Cache Gradle packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -42,6 +42,14 @@ jobs:
       - name: Code style check with Spotless
         run: ./gradlew spotlessCheck
 
-      # 6. Gradle clean build
-      - name: Build with Gradle
+      # 6. 프로젝트 빌드
+      - name: Build the Project
         run: ./gradlew clean build -x test
+
+      - name: Docker build & push to Docker repo
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          echo "docker 로그인 성공"
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/st-order .
+          echo "docker 빌드 성공"
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/st-order
