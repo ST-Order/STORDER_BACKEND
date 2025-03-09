@@ -53,3 +53,25 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/st-order .
           echo "docker 빌드 성공"
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/st-order
+
+      # 빠른 테스트를 위한 임시 코드
+      - name: AWS login and docker image pull and run
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: 22
+          envs: GITHUB_SHA
+          script: |
+            sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            echo "docker 로그인 성공"
+            sudo docker stop $(sudo docker ps -aq)
+            echo "현재 실행 중인 모든 Docker 컨테이너 중지"
+            sudo docker rm -f $(sudo docker ps -qa)
+            echo "모든 Docker 컨테이너 강제로 삭제"
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/st-order
+            echo "docker pull 성공"
+            sudo docker run -d -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/st-order
+            sudo docker image prune -f
+            echo "사용하지 않는 Docker image 정리"
