@@ -55,38 +55,9 @@ public class UserController {
     @ApiErrorExceptionsExample(GetUserPageExceptionDocs.class)
     @GetMapping("/mypage/orders/{orderId}/details")
     public ResponseEntity<ApiResponse<OrderDetailResponseDto>> getOrderDetails(
-            @PathVariable @Parameter(description = "주문 번호", example = "443") int orderId) {
-        List<OrderDetailResponseDto.MenuDto> menu =
-                List.of(
-                        OrderDetailResponseDto.MenuDto.builder()
-                                .menuImage("https://example.com/images/menu1.jpg")
-                                .menuName("경양식 돈까스")
-                                .option(
-                                        List.of(
-                                                OrderDetailResponseDto.MenuDto.OptionDto.builder()
-                                                        .optionName("밥 추가")
-                                                        .build()))
-                                .build(),
-                        OrderDetailResponseDto.MenuDto.builder()
-                                .menuImage("https://example.com/images/menu2.jpg")
-                                .menuName("경양식 돈까스")
-                                .option(
-                                        List.of(
-                                                OrderDetailResponseDto.MenuDto.OptionDto.builder()
-                                                        .optionName("밥 추가")
-                                                        .build()))
-                                .build());
+        @PathVariable @Parameter(description = "주문 번호", example = "443") Long orderId) {
 
-        OrderDetailResponseDto orderDetail =
-                OrderDetailResponseDto.builder()
-                        .orderId(orderId)
-                        .orderTime(LocalDateTime.of(2024, 10, 4, 18, 3, 0, 0))
-                        .storeName("경성카츠")
-                        .menu(menu)
-                        .totalPrice(18000)
-                        .paymentMethod("KAKAOPAY")
-                        .paymentTime(LocalDateTime.of(2024, 10, 4, 18, 2, 30, 0))
-                        .build();
+        OrderDetailResponseDto orderDetail = userService.getOrderDetails(orderId);
 
         return ResponseEntity.ok(ApiResponse.success("주문 상세 조회에 성공하였습니다.", orderDetail));
     }

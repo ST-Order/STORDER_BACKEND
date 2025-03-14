@@ -1,10 +1,16 @@
 package com.storder.order.user.service;
 
+import static com.storder.order.order.exception.OrderErrorCode.*;
+
 import com.storder.order.order.dto.user.OrderSummaryDto;
 import com.storder.order.order.entity.Order;
 import com.storder.order.order.entity.OrderMenu;
+import com.storder.order.order.exception.OrderException;
+import com.storder.order.order.repository.OrderMenuOptionRepository;
+import com.storder.order.order.repository.OrderMenuRepository;
 import com.storder.order.order.repository.OrderRepository;
 import com.storder.order.order.service.OrderService;
+import com.storder.order.user.dto.user.OrderDetailResponseDto;
 import com.storder.order.user.dto.user.OrderResponseDto;
 import com.storder.order.user.dto.user.UserInfoResponseDto;
 import com.storder.order.user.entity.User;
@@ -17,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +37,8 @@ public class UserService {
     private final OrderService orderService;
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final OrderMenuRepository orderMenuRepository;
+    private final OrderMenuOptionRepository orderMenuOptionRepository;
 
     public UserInfoResponseDto getUserTotalOrderAmount(Long userId) {
         // TODO: 추후 추가 로직 (에러 처리) 구현 필요
@@ -106,6 +115,40 @@ public class UserService {
             .totalOrderCount(totalOrderCount)
             .totalPrice(totalOrderAmount)
             .orders(orderGroups)
+            .build();
+    }
+
+    @Transactional(readOnly = true)
+    public OrderDetailResponseDto getOrderDetails(Long orderId) {
+        // 주문 정보 조회
+        Order order = orderRepository.findById(orderId).orElseThrow(); // TODO: 에러 정의 필요
+
+        // 주문 메뉴 목록 조회
+        List<OrderMenu> orderMenus = orderMenuRepository.findByOrder(order);
+
+        // 주문 메뉴 상세 정보 변환
+        List<OrderDetailResponseDto.MenuDto> menuDtos = orderMenus.stream()
+            .map(orderMenu -> OrderDetailResponseDto.MenuDto.builder()
+                .menuImage(orderMenu.getMenu().getMenuImage())
+                .menuName(orderMenu.getMenu().getMenuName())
+                .option(orderMenuOptionRepository.findByOrderMenu(orderMenu)
+                    .stream()
+                    .map(orderOption -> OrderDetailResponseDto.MenuDto.OptionDto.builder()
+                        .optionName(orderOption.getMenuOption().getOptionName())
+                        .build())
+                    .collect(Collectors.toList()))
+                .build())
+            .collect(Collectors.toList());
+
+        return OrderDetailResponseDto.builder()
+            .orderId(order.getOrderId())
+            .orderTime(order.getCreatedAt())
+            .storeName(orderMenus.get(0).getMenu().getStore().getStoreName())  // 첫 번째 메뉴의 가게명 사용
+            .menu(menuDtos)
+            .totalPrice(order.getTotalPrice())
+            //:TODO 결제 관련 필드는 나중에 구현
+            //.paymentMethod(order.getPaymentMethod())
+            //.paymentTime(order.getPayedAt())
             .build();
     }
 }
