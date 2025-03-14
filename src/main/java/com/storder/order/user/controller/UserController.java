@@ -2,6 +2,7 @@ package com.storder.order.user.controller;
 
 import com.storder.order.global.annotation.ApiErrorExceptionsExample;
 import com.storder.order.global.dto.ApiResponse;
+import com.storder.order.menu.service.ReviewService;
 import com.storder.order.user.docs.GetUserPageExceptionDocs;
 import com.storder.order.user.docs.PostUserReviewExceptionDocs;
 import com.storder.order.user.dto.user.OrderDetailResponseDto;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @Operation(
             summary = "사용자 이름과 6개월 구매 통계 조회",
@@ -66,7 +68,10 @@ public class UserController {
     @ApiErrorExceptionsExample(PostUserReviewExceptionDocs.class)
     @PostMapping("/reviews")
     public ResponseEntity<ApiResponse<Void>> createReview(
-            @RequestBody ReviewRequestDto reviewRequestDto) {
+        @AuthenticationPrincipal UserDetails userDetails,
+        @RequestBody ReviewRequestDto reviewRequestDto) {
+
+        reviewService.createReview(userDetails.getUser().getUserId(), reviewRequestDto);
         return ResponseEntity.ok(ApiResponse.success("리뷰 작성에 성공하였습니다.", null));
     }
 }
