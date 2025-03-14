@@ -1,6 +1,7 @@
 package com.storder.order.user.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -17,24 +18,34 @@ public class OrderResponseDto {
     private int totalOrderCount;
 
     @Schema(description = "주문 리스트")
-    private List<OrderDto> orders;
+    private List<OrderGroupDto> orders;
 
     @Getter
     @Builder
-    public static class OrderDto {
-        @Schema(description = "메뉴 이미지", example = "https://example.com/images/food1.jpg")
-        private String menuImage;
+    public static class OrderGroupDto {
+        @Schema(description = "주문 ID", example = "12345")
+        private Long orderId;
 
-        @Schema(description = "주문 시간", example = "2024-10-04T18:03:00")
-        private LocalDateTime orderTime;
+        @Schema(description = "주문 날짜", example = "2025-03-20")
+        private LocalDate orderDate;
 
-        @Schema(description = "주문 상태", example = "COOKING")
-        private String orderStatus;
+        @Schema(description = "가게별 주문 리스트")
+        private List<StoreOrderDto> storeOrders;
+    }
 
-        @Schema(description = "메뉴 이름", example = "경성카츠")
-        private String menuName;
+    @Getter
+    @Builder
+    public static class StoreOrderDto {
+        @Schema(description = "가게 이미지", example = "https://example.com/images/food1.jpg")
+        private String storeImage;
 
-        @Schema(description = "메뉴 가격", example = "9000")
-        private int price;
+        @Schema(description = "가게 이름", example = "경성카츠")
+        private String storeName;
+
+        @Schema(description = "가게별 총 주문 금액", example = "18000")
+        private long totalOrderPrice;
+
+        @Schema(description = "주문 완료 일시", example = "2025-03-20T17:00:00")
+        private LocalDateTime endAt;
     }
 }
