@@ -29,19 +29,24 @@ public class MenuService {
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
 
+    /** 사장님이 등록한 모든 메뉴 조회 (메뉴 이름 기준 오름차순 정렬) */
     public MenuResponseDto getAllMenus(Long ownerId) {
+        // 1. 사장님 정보 조회
         User owner =
                 userRepository
                         .findById(ownerId)
                         .orElseThrow(() -> new UserException(USER_NOT_FOUND));
 
+        // 2. 사장님이 등록한 가게 조회 (User 엔티티가 Store를 참조하지 않으므로 StoreRepository 사용)
         Store store =
                 storeRepository
-                        .findById(owner.getUserId())
+                        .findByOwner(owner)
                         .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
 
-        List<Menu> menus = menuRepository.findByStore(store);
+        // 3. 해당 가게의 모든 메뉴 조회 (메뉴 이름 오름차순 정렬)
+        List<Menu> menus = menuRepository.findByStoreOrderByMenuNameAsc(store);
 
+        // 4. DTO 변환 및 반환
         List<MenuResponseDto.MenuDto> menuDtoList =
                 menus.stream()
                         .map(
