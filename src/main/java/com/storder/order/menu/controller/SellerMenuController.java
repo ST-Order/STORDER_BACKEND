@@ -9,52 +9,35 @@ import com.storder.order.menu.docs.seller.SellerSoldOutStatusExceptionDocs;
 import com.storder.order.menu.dto.store.MenuRequestDto;
 import com.storder.order.menu.dto.store.MenuResponseDto;
 import com.storder.order.menu.dto.store.SoldOutMenuResponseDto;
+import com.storder.order.menu.service.MenuService;
+import com.storder.order.user.entity.UserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/sellers/menus")
 @Tag(name = "Seller Menu Controller", description = "[사장님] 메뉴 관련 API")
+@RequiredArgsConstructor
 public class SellerMenuController {
+
+    private final MenuService menuService;
 
     @Operation(summary = "등록된 메뉴 조회", description = "모든 등록된 메뉴를 조회합니다.")
     @ApiErrorExceptionsExample(SellerGetMenuExceptionDocs.class)
     @GetMapping
-    public ResponseEntity<ApiResponse<MenuResponseDto>> getAllMenus() {
-        List<MenuResponseDto.MenuDto> menus =
-                List.of(
-                        MenuResponseDto.MenuDto.builder()
-                                .menuId(1L)
-                                .menuName("삼겹덮밥")
-                                .isBest(true)
-                                .isPopular(true)
-                                .menuImage("https://example.com/menu1.png")
-                                .description("맛난 삼겹살과 쌈장으로 만든 덮밥")
-                                .price(5000)
-                                .isSoldOut(false)
-                                .isAvailable(true)
-                                .options(
-                                        List.of(
-                                                MenuResponseDto.MenuDto.OptionDto.builder()
-                                                        .optionId(101L)
-                                                        .optionName("밥 추가")
-                                                        .optionPrice(500)
-                                                        .optionAvailable(true)
-                                                        .build(),
-                                                MenuResponseDto.MenuDto.OptionDto.builder()
-                                                        .optionId(102L)
-                                                        .optionName("곱빼기")
-                                                        .optionPrice(1000)
-                                                        .optionAvailable(true)
-                                                        .build()))
-                                .build());
-        return ResponseEntity.ok(
-                ApiResponse.success(
-                        "메뉴 조회에 성공하였습니다.", MenuResponseDto.builder().menus(menus).build()));
+    public ResponseEntity<ApiResponse<MenuResponseDto>> getAllMenus(
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        MenuResponseDto menuResponseDto =
+                menuService.getAllMenus(userDetails.getUser().getUserId());
+
+        return ResponseEntity.ok(ApiResponse.success("메뉴 조회에 성공하였습니다.", menuResponseDto));
     }
 
     @Operation(summary = "메뉴 등록", description = "새로운 메뉴를 등록합니다.")
