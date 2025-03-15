@@ -50,4 +50,19 @@ public class Menu extends BaseEntity {
 
     @Column(name = "menu_rating", nullable = false)
     private Double menuRating;
+
+    public void updateMenu(
+            String menuName,
+            String menuImage,
+            String description,
+            int price,
+            boolean isBest,
+            boolean isPopular) {
+        this.menuName = menuName;
+        this.menuImage = menuImage;
+        this.description = description;
+        this.price = price;
+        this.isBest = isBest;
+        this.isPopular = isPopular;
+    }
 }

@@ -65,8 +65,11 @@ public class SellerMenuController {
     @ApiErrorExceptionsExample(SellerMenuExceptionDocs.class)
     @PutMapping("/{menuId}")
     public ResponseEntity<ApiResponse<Void>> updateMenu(
+            @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable @Parameter(description = "메뉴 ID") Long menuId,
             @RequestBody MenuRequestDto menuRequestDto) {
+
+        menuService.updateMenu(userDetails.getUser().getUserId(), menuId, menuRequestDto);
         return ResponseEntity.ok(ApiResponse.success("메뉴 수정에 성공하였습니다.", null));
     }
 

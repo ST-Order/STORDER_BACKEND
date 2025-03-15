@@ -176,4 +176,63 @@ public class MenuService {
 
         menuRepository.delete(menu);
     }
+
+    @Transactional
+    public void updateMenu(Long ownerId, Long menuId, MenuRequestDto requestDto) {
+        User owner =
+                userRepository
+                        .findById(ownerId)
+                        .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+
+        Store store =
+                storeRepository
+                        .findByOwner(owner)
+                        .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+
+        Menu menu =
+                menuRepository
+                        .findById(menuId)
+                        .orElseThrow(() -> new MenuException(MENU_NOT_FOUND));
+
+        if (!menu.getStore().equals(store)) {
+            throw new MenuException(NOT_MENU_OWNER);
+        }
+
+        Optional<Menu> existingMenu =
+                menuRepository.findByStoreAndMenuName(store, requestDto.getMenuName());
+        if (existingMenu.isPresent() && !existingMenu.get().getMenuId().equals(menuId)) {
+            throw new MenuException(DUPLICATE_MENU_NAME);
+        }
+
+        List<MenuOption> existingOptions = menuOptionRepository.findByMenu(menu);
+        if (!existingOptions.isEmpty()) {
+            menuOptionRepository.deleteAll(existingOptions);
+        }
+
+        if (requestDto.getOptions() != null && !requestDto.getOptions().isEmpty()) {
+            List<MenuOption> newOptions =
+                    requestDto.getOptions().stream()
+                            .map(
+                                    optionDto ->
+                                            MenuOption.builder()
+                                                    .menu(menu)
+                                                    .optionName(optionDto.getOptionName())
+                                                    .optionPrice(optionDto.getOptionPrice())
+                                                    .optionAvailable(optionDto.isOptionAvailable())
+                                                    .build())
+                            .collect(Collectors.toList());
+
+            menuOptionRepository.saveAll(newOptions);
+        }
+
+        menu.updateMenu(
+                requestDto.getMenuName(),
+                requestDto.getMenuImage(),
+                requestDto.getDescription(),
+                requestDto.getPrice(),
+                requestDto.isBest(),
+                requestDto.isPopular());
+
+        menuRepository.save(menu);
+    }
 }
