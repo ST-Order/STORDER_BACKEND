@@ -73,6 +73,17 @@ public class SellerMenuController {
         return ResponseEntity.ok(ApiResponse.success("메뉴 수정에 성공하였습니다.", null));
     }
 
+    @Operation(summary = "메뉴 상세 조회", description = "특정 메뉴의 상세 정보를 조회합니다.")
+    @ApiErrorExceptionsExample(SellerMenuExceptionDocs.class)
+    @GetMapping("/{menuId}")
+    public ResponseEntity<ApiResponse<MenuRequestDto>> getMenuDetail(
+        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable @Parameter(description = "메뉴 ID") Long menuId) {
+
+        MenuRequestDto menuDetail = menuService.getMenuDetail(userDetails.getUser().getUserId(), menuId);
+        return ResponseEntity.ok(ApiResponse.success("메뉴 상세 조회에 성공하였습니다.", menuDetail));
+    }
+
     @Operation(summary = "품절 상태 변경", description = "특정 메뉴의 품절 상태를 변경합니다.")
     @ApiErrorExceptionsExample(SellerSoldOutStatusExceptionDocs.class)
     @PatchMapping("/{menuId}/status")
