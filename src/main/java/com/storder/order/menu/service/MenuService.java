@@ -6,6 +6,7 @@ import static com.storder.order.user.exception.UserErrorCode.*;
 
 import com.storder.order.menu.dto.store.MenuRequestDto;
 import com.storder.order.menu.dto.store.MenuResponseDto;
+import com.storder.order.menu.dto.store.SoldOutMenuResponseDto;
 import com.storder.order.menu.entity.Menu;
 import com.storder.order.menu.entity.MenuOption;
 import com.storder.order.menu.exception.MenuException;
@@ -305,5 +306,35 @@ public class MenuService {
         menu.updateSoldOutStatus(request.isSoldOut());
 
         menuRepository.save(menu);
+    }
+
+    @Transactional(readOnly = true)
+    public SoldOutMenuResponseDto getSoldOutMenus(Long ownerId) {
+        User owner =
+                userRepository
+                        .findById(ownerId)
+                        .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+
+        Store store =
+                storeRepository
+                        .findByOwner(owner)
+                        .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+
+        List<Menu> soldOutMenus = menuRepository.findByStoreAndIsSoldoutTrue(store);
+
+        List<SoldOutMenuResponseDto.MenuDto> menuDtoList =
+                soldOutMenus.stream()
+                        .map(
+                                menu ->
+                                        SoldOutMenuResponseDto.MenuDto.builder()
+                                                .menuId(menu.getMenuId())
+                                                .menuName(menu.getMenuName())
+                                                .menuImage(menu.getMenuImage())
+                                                .price(menu.getPrice())
+                                                .isSoldOut(menu.getIsSoldout())
+                                                .build())
+                        .collect(Collectors.toList());
+
+        return SoldOutMenuResponseDto.builder().menus(menuDtoList).build();
     }
 }

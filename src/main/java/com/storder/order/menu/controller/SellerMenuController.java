@@ -14,7 +14,6 @@ import com.storder.order.user.entity.UserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -101,26 +100,12 @@ public class SellerMenuController {
     @Operation(summary = "품절 메뉴 조회", description = "품절된 모든 메뉴를 조회합니다.")
     @ApiErrorExceptionsExample(SellerGetMenuExceptionDocs.class)
     @GetMapping("/sold-out")
-    public ResponseEntity<ApiResponse<SoldOutMenuResponseDto>> getSoldOutMenus() {
-        List<SoldOutMenuResponseDto.MenuDto> menus =
-                List.of(
-                        SoldOutMenuResponseDto.MenuDto.builder()
-                                .menuId(1L)
-                                .menuName("삼겹덮밥")
-                                .menuImage("https://example.com/menu1.png")
-                                .price(5000)
-                                .isSoldOut(true)
-                                .build(),
-                        SoldOutMenuResponseDto.MenuDto.builder()
-                                .menuId(2L)
-                                .menuName("제육덮밥")
-                                .menuImage("https://example.com/menu2.png")
-                                .price(5000)
-                                .isSoldOut(true)
-                                .build());
-        return ResponseEntity.ok(
-                ApiResponse.success(
-                        "품절 메뉴 조회에 성공하였습니다.",
-                        SoldOutMenuResponseDto.builder().menus(menus).build()));
+    public ResponseEntity<ApiResponse<SoldOutMenuResponseDto>> getSoldOutMenus(
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        SoldOutMenuResponseDto soldOutMenus =
+                menuService.getSoldOutMenus(userDetails.getUser().getUserId());
+
+        return ResponseEntity.ok(ApiResponse.success("품절 메뉴 조회에 성공하였습니다.", soldOutMenus));
     }
 }

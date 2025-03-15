@@ -10,4 +10,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     List<Menu> findByStoreOrderByMenuNameAsc(Store store);
 
     Optional<Menu> findByStoreAndMenuName(Store store, String menuName);
+
+    List<Menu> findByStoreAndIsSoldoutTrue(Store store);
 }
