@@ -5,7 +5,6 @@ import static com.storder.order.order.exception.OrderErrorCode.*;
 import com.storder.order.order.dto.user.OrderSummaryDto;
 import com.storder.order.order.entity.Order;
 import com.storder.order.order.entity.OrderMenu;
-import com.storder.order.order.exception.OrderException;
 import com.storder.order.order.repository.OrderMenuOptionRepository;
 import com.storder.order.order.repository.OrderMenuRepository;
 import com.storder.order.order.repository.OrderRepository;
@@ -17,15 +16,10 @@ import com.storder.order.user.entity.User;
 import com.storder.order.user.exception.UserErrorCode;
 import com.storder.order.user.exception.UserException;
 import com.storder.order.user.repository.UserRepository;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,44 +72,65 @@ public class UserService {
         LocalDate startDate = endDate.minusMonths(1);
 
         // 총 주문 금액과 총 주문 횟수 가져오기
-        Integer totalOrderAmount = orderRepository.findTotalOrderAmountByUserAndPeriod(userId, startDate.atStartOfDay(), endDate.atStartOfDay());
-        Integer totalOrderCount = orderRepository.findTotalOrderCountByUserAndPeriod(userId, startDate.atStartOfDay(), endDate.atStartOfDay());
+        Integer totalOrderAmount =
+                orderRepository.findTotalOrderAmountByUserAndPeriod(
+                        userId, startDate.atStartOfDay(), endDate.atStartOfDay());
+        Integer totalOrderCount =
+                orderRepository.findTotalOrderCountByUserAndPeriod(
+                        userId, startDate.atStartOfDay(), endDate.atStartOfDay());
 
         // 주문 내역 가져오기 (OrderSummaryDto 리스트)
-        List<OrderSummaryDto> orderSummaries = orderRepository.findUserOrdersWithinPeriod(userId, startDate, endDate);
+        List<OrderSummaryDto> orderSummaries =
+                orderRepository.findUserOrdersWithinPeriod(userId, startDate, endDate);
 
         // 주문 ID 기준으로 그룹화
-        Map<Long, List<OrderResponseDto.StoreOrderDto>> groupedByOrder = orderSummaries.stream()
-            .collect(Collectors.groupingBy(OrderSummaryDto::getOrderId,
-                Collectors.mapping(summary -> OrderResponseDto.StoreOrderDto.builder()
-                    .storeImage(summary.getStoreImage())
-                    .storeName(summary.getStoreName())
-                    .totalOrderPrice(summary.getTotalOrderPrice())
-                    .endAt(summary.getEndAt())
-                    .build(), Collectors.toList())));
+        Map<Long, List<OrderResponseDto.StoreOrderDto>> groupedByOrder =
+                orderSummaries.stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        OrderSummaryDto::getOrderId,
+                                        Collectors.mapping(
+                                                summary ->
+                                                        OrderResponseDto.StoreOrderDto.builder()
+                                                                .storeImage(summary.getStoreImage())
+                                                                .storeName(summary.getStoreName())
+                                                                .totalOrderPrice(
+                                                                        summary
+                                                                                .getTotalOrderPrice())
+                                                                .endAt(summary.getEndAt())
+                                                                .build(),
+                                                Collectors.toList())));
 
-        List<OrderResponseDto.OrderGroupDto> orderGroups = groupedByOrder.entrySet().stream()
-            .map(entry -> {
-                Long orderId = entry.getKey();
-                List<OrderResponseDto.StoreOrderDto> storeOrders = entry.getValue();
-                LocalDate orderDate = orderSummaries.stream()
-                    .filter(summary -> summary.getOrderId().equals(orderId))
-                    .findFirst()
-                    .map(OrderSummaryDto::getOrderDate)
-                    .orElse(null);
+        List<OrderResponseDto.OrderGroupDto> orderGroups =
+                groupedByOrder.entrySet().stream()
+                        .map(
+                                entry -> {
+                                    Long orderId = entry.getKey();
+                                    List<OrderResponseDto.StoreOrderDto> storeOrders =
+                                            entry.getValue();
+                                    LocalDate orderDate =
+                                            orderSummaries.stream()
+                                                    .filter(
+                                                            summary ->
+                                                                    summary.getOrderId()
+                                                                            .equals(orderId))
+                                                    .findFirst()
+                                                    .map(OrderSummaryDto::getOrderDate)
+                                                    .orElse(null);
 
-                return OrderResponseDto.OrderGroupDto.builder()
-                    .orderId(orderId)
-                    .orderDate(orderDate)
-                    .storeOrders(storeOrders)
-                    .build();
-            }).collect(Collectors.toList());
+                                    return OrderResponseDto.OrderGroupDto.builder()
+                                            .orderId(orderId)
+                                            .orderDate(orderDate)
+                                            .storeOrders(storeOrders)
+                                            .build();
+                                })
+                        .collect(Collectors.toList());
 
         return OrderResponseDto.builder()
-            .totalOrderCount(totalOrderCount)
-            .totalPrice(totalOrderAmount)
-            .orders(orderGroups)
-            .build();
+                .totalOrderCount(totalOrderCount)
+                .totalPrice(totalOrderAmount)
+                .orders(orderGroups)
+                .build();
     }
 
     @Transactional(readOnly = true)
@@ -127,28 +142,41 @@ public class UserService {
         List<OrderMenu> orderMenus = orderMenuRepository.findByOrder(order);
 
         // 주문 메뉴 상세 정보 변환
-        List<OrderDetailResponseDto.MenuDto> menuDtos = orderMenus.stream()
-            .map(orderMenu -> OrderDetailResponseDto.MenuDto.builder()
-                .menuImage(orderMenu.getMenu().getMenuImage())
-                .menuName(orderMenu.getMenu().getMenuName())
-                .option(orderMenuOptionRepository.findByOrderMenu(orderMenu)
-                    .stream()
-                    .map(orderOption -> OrderDetailResponseDto.MenuDto.OptionDto.builder()
-                        .optionName(orderOption.getMenuOption().getOptionName())
-                        .build())
-                    .collect(Collectors.toList()))
-                .build())
-            .collect(Collectors.toList());
+        List<OrderDetailResponseDto.MenuDto> menuDtos =
+                orderMenus.stream()
+                        .map(
+                                orderMenu ->
+                                        OrderDetailResponseDto.MenuDto.builder()
+                                                .menuImage(orderMenu.getMenu().getMenuImage())
+                                                .menuName(orderMenu.getMenu().getMenuName())
+                                                .option(
+                                                        orderMenuOptionRepository
+                                                                .findByOrderMenu(orderMenu)
+                                                                .stream()
+                                                                .map(
+                                                                        orderOption ->
+                                                                                OrderDetailResponseDto
+                                                                                        .MenuDto
+                                                                                        .OptionDto
+                                                                                        .builder()
+                                                                                        .optionName(
+                                                                                                orderOption
+                                                                                                        .getMenuOption()
+                                                                                                        .getOptionName())
+                                                                                        .build())
+                                                                .collect(Collectors.toList()))
+                                                .build())
+                        .collect(Collectors.toList());
 
         return OrderDetailResponseDto.builder()
-            .orderId(order.getOrderId())
-            .orderTime(order.getCreatedAt())
-            .storeName(orderMenus.get(0).getMenu().getStore().getStoreName())  // 첫 번째 메뉴의 가게명 사용
-            .menu(menuDtos)
-            .totalPrice(order.getTotalPrice())
-            //:TODO 결제 관련 필드는 나중에 구현
-            //.paymentMethod(order.getPaymentMethod())
-            //.paymentTime(order.getPayedAt())
-            .build();
+                .orderId(order.getOrderId())
+                .orderTime(order.getCreatedAt())
+                .storeName(orderMenus.get(0).getMenu().getStore().getStoreName()) // 첫 번째 메뉴의 가게명 사용
+                .menu(menuDtos)
+                .totalPrice(order.getTotalPrice())
+                // :TODO 결제 관련 필드는 나중에 구현
+                // .paymentMethod(order.getPaymentMethod())
+                // .paymentTime(order.getPayedAt())
+                .build();
     }
 }

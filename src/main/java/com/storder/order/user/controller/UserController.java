@@ -14,8 +14,6 @@ import com.storder.order.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -57,7 +55,7 @@ public class UserController {
     @ApiErrorExceptionsExample(GetUserPageExceptionDocs.class)
     @GetMapping("/mypage/orders/{orderId}/details")
     public ResponseEntity<ApiResponse<OrderDetailResponseDto>> getOrderDetails(
-        @PathVariable @Parameter(description = "주문 번호", example = "443") Long orderId) {
+            @PathVariable @Parameter(description = "주문 번호", example = "443") Long orderId) {
 
         OrderDetailResponseDto orderDetail = userService.getOrderDetails(orderId);
 
@@ -68,8 +66,8 @@ public class UserController {
     @ApiErrorExceptionsExample(PostUserReviewExceptionDocs.class)
     @PostMapping("/reviews")
     public ResponseEntity<ApiResponse<Void>> createReview(
-        @AuthenticationPrincipal UserDetails userDetails,
-        @RequestBody ReviewRequestDto reviewRequestDto) {
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody ReviewRequestDto reviewRequestDto) {
 
         reviewService.createReview(userDetails.getUser().getUserId(), reviewRequestDto);
         return ResponseEntity.ok(ApiResponse.success("리뷰 작성에 성공하였습니다.", null));
