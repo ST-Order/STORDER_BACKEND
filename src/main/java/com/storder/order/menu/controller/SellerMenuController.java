@@ -55,7 +55,9 @@ public class SellerMenuController {
     @ApiErrorExceptionsExample(SellerMenuExceptionDocs.class)
     @DeleteMapping("/{menuId}")
     public ResponseEntity<ApiResponse<Void>> deleteMenu(
+            @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable @Parameter(description = "메뉴 ID") Long menuId) {
+        menuService.deleteMenu(userDetails.getUser().getUserId(), menuId);
         return ResponseEntity.ok(ApiResponse.success("메뉴 삭제에 성공하였습니다.", null));
     }
 

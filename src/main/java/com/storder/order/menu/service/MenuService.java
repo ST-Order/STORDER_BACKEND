@@ -98,44 +98,82 @@ public class MenuService {
 
     @Transactional
     public void createMenu(Long ownerId, MenuRequestDto requestDto) {
-        User owner = userRepository.findById(ownerId)
-            .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+        User owner =
+                userRepository
+                        .findById(ownerId)
+                        .orElseThrow(() -> new UserException(USER_NOT_FOUND));
 
-        Store store = storeRepository.findByOwner(owner)
-            .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+        Store store =
+                storeRepository
+                        .findByOwner(owner)
+                        .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
 
-        Optional<Menu> existingMenu = menuRepository.findByStoreAndMenuName(store, requestDto.getMenuName());
+        Optional<Menu> existingMenu =
+                menuRepository.findByStoreAndMenuName(store, requestDto.getMenuName());
         if (existingMenu.isPresent()) {
             throw new MenuException(DUPLICATE_MENU_NAME);
         }
 
-        Menu newMenu = Menu.builder()
-            .store(store)
-            .menuName(requestDto.getMenuName())
-            .menuImage(requestDto.getMenuImage())
-            .description(requestDto.getDescription())
-            .price(requestDto.getPrice())
-            .isSoldout(false)  // 기본값 판매 가능 상태
-            .isAvailable(true) // 기본값 판매 가능 상태
-            .isBest(requestDto.isBest())
-            .isPopular(requestDto.isPopular())
-            .orderCount(0)     // 기본 주문 수 0
-            .menuRating(0.0)   // 기본 평점 0.0
-            .build();
+        Menu newMenu =
+                Menu.builder()
+                        .store(store)
+                        .menuName(requestDto.getMenuName())
+                        .menuImage(requestDto.getMenuImage())
+                        .description(requestDto.getDescription())
+                        .price(requestDto.getPrice())
+                        .isSoldout(false) // 기본값 판매 가능 상태
+                        .isAvailable(true) // 기본값 판매 가능 상태
+                        .isBest(requestDto.isBest())
+                        .isPopular(requestDto.isPopular())
+                        .orderCount(0) // 기본 주문 수 0
+                        .menuRating(0.0) // 기본 평점 0.0
+                        .build();
 
         menuRepository.save(newMenu);
 
         if (requestDto.getOptions() != null && !requestDto.getOptions().isEmpty()) {
-            List<MenuOption> options = requestDto.getOptions().stream()
-                .map(optionDto -> MenuOption.builder()
-                    .menu(newMenu)
-                    .optionName(optionDto.getOptionName())
-                    .optionPrice(optionDto.getOptionPrice())
-                    .optionAvailable(optionDto.isOptionAvailable())
-                    .build())
-                .collect(Collectors.toList());
+            List<MenuOption> options =
+                    requestDto.getOptions().stream()
+                            .map(
+                                    optionDto ->
+                                            MenuOption.builder()
+                                                    .menu(newMenu)
+                                                    .optionName(optionDto.getOptionName())
+                                                    .optionPrice(optionDto.getOptionPrice())
+                                                    .optionAvailable(optionDto.isOptionAvailable())
+                                                    .build())
+                            .collect(Collectors.toList());
 
             menuOptionRepository.saveAll(options);
         }
+    }
+
+    @Transactional
+    public void deleteMenu(Long ownerId, Long menuId) {
+        User owner =
+                userRepository
+                        .findById(ownerId)
+                        .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+
+        Store store =
+                storeRepository
+                        .findByOwner(owner)
+                        .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+
+        Menu menu =
+                menuRepository
+                        .findById(menuId)
+                        .orElseThrow(() -> new MenuException(MENU_NOT_FOUND));
+
+        if (!menu.getStore().equals(store)) {
+            throw new MenuException(NOT_MENU_OWNER);
+        }
+
+        List<MenuOption> options = menuOptionRepository.findByMenu(menu);
+        if (!options.isEmpty()) {
+            menuOptionRepository.deleteAll(options);
+        }
+
+        menuRepository.delete(menu);
     }
 }
