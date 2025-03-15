@@ -238,36 +238,72 @@ public class MenuService {
 
     @Transactional(readOnly = true)
     public MenuRequestDto getMenuDetail(Long ownerId, Long menuId) {
-        User owner = userRepository.findById(ownerId)
-            .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+        User owner =
+                userRepository
+                        .findById(ownerId)
+                        .orElseThrow(() -> new UserException(USER_NOT_FOUND));
 
         // 2. 사장님의 가게 조회
-        Store store = storeRepository.findByOwner(owner)
-            .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+        Store store =
+                storeRepository
+                        .findByOwner(owner)
+                        .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
 
-        Menu menu = menuRepository.findById(menuId)
-            .orElseThrow(() -> new MenuException(MENU_NOT_FOUND));
+        Menu menu =
+                menuRepository
+                        .findById(menuId)
+                        .orElseThrow(() -> new MenuException(MENU_NOT_FOUND));
 
         if (!menu.getStore().equals(store)) {
             throw new MenuException(NOT_MENU_OWNER);
         }
 
-        List<MenuRequestDto.OptionDto> options = menuOptionRepository.findByMenu(menu).stream()
-            .map(option -> MenuRequestDto.OptionDto.builder()
-                .optionName(option.getOptionName())
-                .optionPrice(option.getOptionPrice())
-                .optionAvailable(option.getOptionAvailable())
-                .build())
-            .collect(Collectors.toList());
+        List<MenuRequestDto.OptionDto> options =
+                menuOptionRepository.findByMenu(menu).stream()
+                        .map(
+                                option ->
+                                        MenuRequestDto.OptionDto.builder()
+                                                .optionName(option.getOptionName())
+                                                .optionPrice(option.getOptionPrice())
+                                                .optionAvailable(option.getOptionAvailable())
+                                                .build())
+                        .collect(Collectors.toList());
 
         return MenuRequestDto.builder()
-            .menuName(menu.getMenuName())
-            .menuImage(menu.getMenuImage())
-            .description(menu.getDescription())
-            .price(menu.getPrice())
-            .isBest(menu.getIsBest())
-            .isPopular(menu.getIsPopular())
-            .options(options)
-            .build();
+                .menuName(menu.getMenuName())
+                .menuImage(menu.getMenuImage())
+                .description(menu.getDescription())
+                .price(menu.getPrice())
+                .isBest(menu.getIsBest())
+                .isPopular(menu.getIsPopular())
+                .options(options)
+                .build();
+    }
+
+    @Transactional
+    public void updateSoldOutStatus(
+            Long ownerId, Long menuId, MenuRequestDto.SoldOutStatusRequest request) {
+        User owner =
+                userRepository
+                        .findById(ownerId)
+                        .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+
+        Store store =
+                storeRepository
+                        .findByOwner(owner)
+                        .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+
+        Menu menu =
+                menuRepository
+                        .findById(menuId)
+                        .orElseThrow(() -> new MenuException(MENU_NOT_FOUND));
+
+        if (!menu.getStore().equals(store)) {
+            throw new MenuException(NOT_MENU_OWNER);
+        }
+
+        menu.updateSoldOutStatus(request.isSoldOut());
+
+        menuRepository.save(menu);
     }
 }

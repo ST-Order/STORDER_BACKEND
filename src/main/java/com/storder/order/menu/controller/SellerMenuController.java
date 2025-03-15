@@ -77,10 +77,11 @@ public class SellerMenuController {
     @ApiErrorExceptionsExample(SellerMenuExceptionDocs.class)
     @GetMapping("/{menuId}")
     public ResponseEntity<ApiResponse<MenuRequestDto>> getMenuDetail(
-        @AuthenticationPrincipal UserDetails userDetails,
-        @PathVariable @Parameter(description = "메뉴 ID") Long menuId) {
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable @Parameter(description = "메뉴 ID") Long menuId) {
 
-        MenuRequestDto menuDetail = menuService.getMenuDetail(userDetails.getUser().getUserId(), menuId);
+        MenuRequestDto menuDetail =
+                menuService.getMenuDetail(userDetails.getUser().getUserId(), menuId);
         return ResponseEntity.ok(ApiResponse.success("메뉴 상세 조회에 성공하였습니다.", menuDetail));
     }
 
@@ -88,8 +89,12 @@ public class SellerMenuController {
     @ApiErrorExceptionsExample(SellerSoldOutStatusExceptionDocs.class)
     @PatchMapping("/{menuId}/status")
     public ResponseEntity<ApiResponse<Void>> updateSoldOutStatus(
+            @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable @Parameter(description = "메뉴 ID") Long menuId,
             @RequestBody MenuRequestDto.SoldOutStatusRequest soldOutStatusRequest) {
+
+        menuService.updateSoldOutStatus(
+                userDetails.getUser().getUserId(), menuId, soldOutStatusRequest);
         return ResponseEntity.ok(ApiResponse.success("메뉴 품절 상태가 변경되었습니다.", null));
     }
 

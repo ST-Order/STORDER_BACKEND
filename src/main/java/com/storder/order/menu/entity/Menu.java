@@ -65,4 +65,8 @@ public class Menu extends BaseEntity {
         this.isBest = isBest;
         this.isPopular = isPopular;
     }
+
+    public void updateSoldOutStatus(boolean isSoldOut) {
+        this.isSoldout = isSoldOut;
+    }
 }
