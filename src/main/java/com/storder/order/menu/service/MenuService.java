@@ -1,10 +1,14 @@
 package com.storder.order.menu.service;
 
+import static com.storder.order.menu.exception.MenuErrorCode.*;
 import static com.storder.order.store.exception.StoreErrorCode.*;
 import static com.storder.order.user.exception.UserErrorCode.*;
 
+import com.storder.order.menu.dto.store.MenuRequestDto;
 import com.storder.order.menu.dto.store.MenuResponseDto;
 import com.storder.order.menu.entity.Menu;
+import com.storder.order.menu.entity.MenuOption;
+import com.storder.order.menu.exception.MenuException;
 import com.storder.order.menu.repository.MenuOptionRepository;
 import com.storder.order.menu.repository.MenuRepository;
 import com.storder.order.store.entity.Store;
@@ -14,6 +18,7 @@ import com.storder.order.user.entity.User;
 import com.storder.order.user.exception.UserException;
 import com.storder.order.user.repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -89,5 +94,48 @@ public class MenuService {
                         .collect(Collectors.toList());
 
         return MenuResponseDto.builder().menus(menuDtoList).build();
+    }
+
+    @Transactional
+    public void createMenu(Long ownerId, MenuRequestDto requestDto) {
+        User owner = userRepository.findById(ownerId)
+            .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+
+        Store store = storeRepository.findByOwner(owner)
+            .orElseThrow(() -> new StoreException(STORE_NOT_FOUND));
+
+        Optional<Menu> existingMenu = menuRepository.findByStoreAndMenuName(store, requestDto.getMenuName());
+        if (existingMenu.isPresent()) {
+            throw new MenuException(DUPLICATE_MENU_NAME);
+        }
+
+        Menu newMenu = Menu.builder()
+            .store(store)
+            .menuName(requestDto.getMenuName())
+            .menuImage(requestDto.getMenuImage())
+            .description(requestDto.getDescription())
+            .price(requestDto.getPrice())
+            .isSoldout(false)  // 기본값 판매 가능 상태
+            .isAvailable(true) // 기본값 판매 가능 상태
+            .isBest(requestDto.isBest())
+            .isPopular(requestDto.isPopular())
+            .orderCount(0)     // 기본 주문 수 0
+            .menuRating(0.0)   // 기본 평점 0.0
+            .build();
+
+        menuRepository.save(newMenu);
+
+        if (requestDto.getOptions() != null && !requestDto.getOptions().isEmpty()) {
+            List<MenuOption> options = requestDto.getOptions().stream()
+                .map(optionDto -> MenuOption.builder()
+                    .menu(newMenu)
+                    .optionName(optionDto.getOptionName())
+                    .optionPrice(optionDto.getOptionPrice())
+                    .optionAvailable(optionDto.isOptionAvailable())
+                    .build())
+                .collect(Collectors.toList());
+
+            menuOptionRepository.saveAll(options);
+        }
     }
 }

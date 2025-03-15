@@ -44,7 +44,10 @@ public class SellerMenuController {
     @ApiErrorExceptionsExample(SellerPostMenuExceptionDocs.class)
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createMenu(
+            @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody MenuRequestDto menuRequestDto) {
+
+        menuService.createMenu(userDetails.getUser().getUserId(), menuRequestDto);
         return ResponseEntity.ok(ApiResponse.success("메뉴 등록에 성공하였습니다.", null));
     }
 
