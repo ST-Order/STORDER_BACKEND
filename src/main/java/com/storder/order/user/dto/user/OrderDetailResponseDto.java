@@ -11,7 +11,7 @@ import lombok.Getter;
 public class OrderDetailResponseDto {
 
     @Schema(description = "주문 번호")
-    private int orderId;
+    private long orderId;
 
     @Schema(description = "주문 시간", example = "2024-10-04T18:03:00")
     private LocalDateTime orderTime;
