@@ -26,19 +26,16 @@ public class ReviewService {
 
     @Transactional
     public void createReview(Long userId, ReviewRequestDto requestDto) {
-        // 유효한 유저인지 검증
         User user =
                 userRepository
                         .findById(userId)
                         .orElseThrow(() -> new UserException(USER_NOT_FOUND));
 
-        // 유효한 메뉴인지 검증
         Menu menu =
                 menuRepository
                         .findById(requestDto.getMenuId())
                         .orElseThrow(() -> new MenuException(MENU_NOT_FOUND));
 
-        // 리뷰 객체 생성 및 저장
         Review review =
                 Review.builder()
                         .menu(menu)

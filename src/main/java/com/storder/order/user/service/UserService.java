@@ -33,9 +33,8 @@ public class UserService {
     private final OrderRepository orderRepository;
     private final OrderMenuRepository orderMenuRepository;
     private final OrderMenuOptionRepository orderMenuOptionRepository;
-
+    // TODO: 추후 추가 로직 (에러 처리) 구현 필요
     public UserInfoResponseDto getUserTotalOrderAmount(Long userId) {
-        // TODO: 추후 추가 로직 (에러 처리) 구현 필요
         User user =
                 userRepository
                         .findById(userId)
@@ -48,30 +47,12 @@ public class UserService {
                 .build();
     }
 
-    public OrderResponseDto getUserOrderDataListV1(Long userId) {
-        // TODO: 추후 추가 로직 (에러 처리) 구현 필요
-        int totalOrderPriceForOneMonth = orderService.getTotalOrderAmountForPeriod(userId, 1);
-        int totalOrderCountForOneMonth = orderService.getTotalOrderCountForPeriod(userId, 1);
-
-        // TODO: 주문 내역 처리 방식 픽스 후 구현
-        /*
-        List<OrderResponseDto.OrderDto> orders = new ArrayList<>();
-
-        return OrderResponseDto.builder()
-            .totalOrderCount(totalOrderCountForOneMonth)
-            .totalPrice(totalOrderPriceForOneMonth)
-            .orders(orders)
-            .build();
-        */
-        return null;
-    }
 
     @Transactional(readOnly = true)
     public OrderResponseDto getUserOrderDataList(Long userId) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusMonths(1);
 
-        // 총 주문 금액과 총 주문 횟수 가져오기
         Integer totalOrderAmount =
                 orderRepository.findTotalOrderAmountByUserAndPeriod(
                         userId, startDate.atStartOfDay(), endDate.atStartOfDay());
@@ -79,7 +60,6 @@ public class UserService {
                 orderRepository.findTotalOrderCountByUserAndPeriod(
                         userId, startDate.atStartOfDay(), endDate.atStartOfDay());
 
-        // 주문 내역 가져오기 (OrderSummaryDto 리스트)
         List<OrderSummaryDto> orderSummaries =
                 orderRepository.findUserOrdersWithinPeriod(userId, startDate, endDate);
 
@@ -135,13 +115,11 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public OrderDetailResponseDto getOrderDetails(Long orderId) {
-        // 주문 정보 조회
-        Order order = orderRepository.findById(orderId).orElseThrow(); // TODO: 에러 정의 필요
 
-        // 주문 메뉴 목록 조회
+        Order order = orderRepository.findById(orderId).orElseThrow();
+
         List<OrderMenu> orderMenus = orderMenuRepository.findByOrder(order);
 
-        // 주문 메뉴 상세 정보 변환
         List<OrderDetailResponseDto.MenuDto> menuDtos =
                 orderMenus.stream()
                         .map(
@@ -171,7 +149,7 @@ public class UserService {
         return OrderDetailResponseDto.builder()
                 .orderId(order.getOrderId())
                 .orderTime(order.getCreatedAt())
-                .storeName(orderMenus.get(0).getMenu().getStore().getStoreName()) // 첫 번째 메뉴의 가게명 사용
+                .storeName(orderMenus.get(0).getMenu().getStore().getStoreName())
                 .menu(menuDtos)
                 .totalPrice(order.getTotalPrice())
                 // :TODO 결제 관련 필드는 나중에 구현
