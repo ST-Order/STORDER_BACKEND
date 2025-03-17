@@ -24,9 +24,8 @@ public class OrderSummaryDto {
         this.orderDate = createdAt.toLocalDate();
         this.storeImage = storeImage;
         this.storeName = storeName;
-        this.totalOrderPrice =
-                totalOrderPrice != null ? totalOrderPrice : 0L;
-                // Long 타입 변환 및 null 방지
+        this.totalOrderPrice = totalOrderPrice != null ? totalOrderPrice : 0L;
+        // Long 타입 변환 및 null 방지
         this.endAt = endAt;
     }
 }

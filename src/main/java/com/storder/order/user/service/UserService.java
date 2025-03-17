@@ -33,6 +33,7 @@ public class UserService {
     private final OrderRepository orderRepository;
     private final OrderMenuRepository orderMenuRepository;
     private final OrderMenuOptionRepository orderMenuOptionRepository;
+
     // TODO: 추후 추가 로직 (에러 처리) 구현 필요
     public UserInfoResponseDto getUserTotalOrderAmount(Long userId) {
         User user =
@@ -46,7 +47,6 @@ public class UserService {
                 .totalOrderCount(user.getOrderCount())
                 .build();
     }
-
 
     @Transactional(readOnly = true)
     public OrderResponseDto getUserOrderDataList(Long userId) {
