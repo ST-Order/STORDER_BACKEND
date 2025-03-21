@@ -52,49 +52,40 @@ public class MenuService {
         // 3. 해당 가게의 모든 메뉴 조회 (메뉴 이름 오름차순 정렬)
         List<Menu> menus = menuRepository.findByStoreOrderByMenuNameAsc(store);
 
-        // 4. DTO 변환 및 반환
+        // DTO 변환 및 반환
         List<MenuResponseDto.MenuDto> menuDtoList =
-                menus.stream()
-                        .map(
-                                menu ->
-                                        MenuResponseDto.MenuDto.builder()
-                                                .menuId(menu.getMenuId())
-                                                .menuName(menu.getMenuName())
-                                                .isBest(menu.getIsBest())
-                                                .isPopular(menu.getIsPopular())
-                                                .menuImage(menu.getMenuImage())
-                                                .description(menu.getDescription())
-                                                .price(menu.getPrice())
-                                                .isSoldOut(menu.getIsSoldout())
-                                                .isAvailable(menu.getIsAvailable())
-                                                .options(
-                                                        menuOptionRepository
-                                                                .findByMenu(menu)
-                                                                .stream()
-                                                                .map(
-                                                                        option ->
-                                                                                MenuResponseDto
-                                                                                        .MenuDto
-                                                                                        .OptionDto
-                                                                                        .builder()
-                                                                                        .optionId(
-                                                                                                option
-                                                                                                        .getOptionId())
-                                                                                        .optionName(
-                                                                                                option
-                                                                                                        .getOptionName())
-                                                                                        .optionPrice(
-                                                                                                option
-                                                                                                        .getOptionPrice())
-                                                                                        .optionAvailable(
-                                                                                                option
-                                                                                                        .getOptionAvailable())
-                                                                                        .build())
-                                                                .collect(Collectors.toList()))
-                                                .build())
-                        .collect(Collectors.toList());
+                menus.stream().map(this::convertToMenuDto).collect(Collectors.toList());
 
         return MenuResponseDto.builder().menus(menuDtoList).build();
+    }
+
+    private MenuResponseDto.MenuDto convertToMenuDto(Menu menu) {
+        List<MenuResponseDto.MenuDto.OptionDto> optionDtos =
+                menuOptionRepository.findByMenu(menu).stream()
+                        .map(this::convertToOptionDto)
+                        .collect(Collectors.toList());
+
+        return MenuResponseDto.MenuDto.builder()
+                .menuId(menu.getMenuId())
+                .menuName(menu.getMenuName())
+                .isBest(menu.getIsBest())
+                .isPopular(menu.getIsPopular())
+                .menuImage(menu.getMenuImage())
+                .description(menu.getDescription())
+                .price(menu.getPrice())
+                .isSoldOut(menu.getIsSoldout())
+                .isAvailable(menu.getIsAvailable())
+                .options(optionDtos)
+                .build();
+    }
+
+    private MenuResponseDto.MenuDto.OptionDto convertToOptionDto(MenuOption option) {
+        return MenuResponseDto.MenuDto.OptionDto.builder()
+                .optionId(option.getOptionId())
+                .optionName(option.getOptionName())
+                .optionPrice(option.getOptionPrice())
+                .optionAvailable(option.getOptionAvailable())
+                .build();
     }
 
     @Transactional
