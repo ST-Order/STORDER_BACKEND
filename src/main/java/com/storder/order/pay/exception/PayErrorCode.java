@@ -14,8 +14,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum PayErrorCode implements BaseErrorCode {
     @ExplainError("잘못된 결제수단 입력일 경우 발생하는 에러입니다.")
-    INVALID_PAYMENT_METHOD(BAD_REQUEST, "PAY_400_1", "잘못된 결제수단입니다.");
+    INVALID_PAYMENT_METHOD(BAD_REQUEST, "PAY_400_1", "잘못된 결제수단입니다."),
 
+    @ExplainError("잘못된 결제 상태일 경우 발생하는 에러입니다.")
+    INVALID_PAYMENT_STATUS(BAD_REQUEST, "PAY_400_2", "잘못된 결제상태입니다.");
 
     private final Integer status;
     private final String code;
