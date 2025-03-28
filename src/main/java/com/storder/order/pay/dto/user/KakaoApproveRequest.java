@@ -1,6 +1,8 @@
 package com.storder.order.pay.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -9,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "카카오페이 결제 승인 요청 DTO")
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class KakaoApproveRequest {
 
     @Schema(description = "가맹점 코드", example = "TC0ONETIME")

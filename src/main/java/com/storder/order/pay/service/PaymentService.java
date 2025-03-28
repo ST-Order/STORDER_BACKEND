@@ -17,7 +17,7 @@ public class PaymentService {
     @Value("${kakaopay.cid}")
     private String cid;
 
-    // DB에 저장해야 함
+    // DB에 저장 필요
     private String cachedTid;
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -25,9 +25,9 @@ public class PaymentService {
     /** 결제 준비 요청 (결제 정보 카카오페이에 전달) */
     public KakaoReadyResponse requestPayment(PaymentRequestDto requestDto) {
 
-        // 필수값 설정
         requestDto =
                 PaymentRequestDto.builder()
+                        .cid(requestDto.getCid())
                         .partnerOrderId(requestDto.getPartnerOrderId())
                         .partnerUserId(requestDto.getPartnerUserId())
                         .itemName(requestDto.getItemName())
@@ -42,7 +42,7 @@ public class PaymentService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "SECRET_KEY " + kakaoPaySecretKey);
+        headers.set("Authorization", "DEV_SECRET_KEY " + kakaoPaySecretKey);
 
         HttpEntity<PaymentRequestDto> request = new HttpEntity<>(requestDto, headers);
 
@@ -52,7 +52,7 @@ public class PaymentService {
                         request,
                         KakaoReadyResponse.class);
 
-        // 응답 TID 저장 (DB에 저장)
+        // 응답 TID 저장 (DB에 저장 필요)
         this.cachedTid = response.getBody().getTid();
 
         return response.getBody();
