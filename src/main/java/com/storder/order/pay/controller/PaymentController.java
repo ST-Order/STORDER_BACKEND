@@ -1,31 +1,39 @@
 package com.storder.order.pay.controller;
 
 import com.storder.order.global.dto.ApiResponse;
+import com.storder.order.pay.dto.user.KakaoApproveResponse;
+import com.storder.order.pay.dto.user.KakaoReadyResponse;
 import com.storder.order.pay.dto.user.PaymentRequestDto;
+import com.storder.order.pay.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/payments")
 @Tag(name = "Payments Controller", description = "[유저] 결제 관련 API")
+@RequiredArgsConstructor
 public class PaymentController {
 
-    @Operation(summary = "결제 처리", description = "결제 요청 데이터를 받아 결제를 처리합니다.")
-    @PostMapping
-    public ResponseEntity<ApiResponse<Void>> processPayment(
-            @RequestBody PaymentRequestDto paymentRequestDto) {
-        String itemName = paymentRequestDto.getItemName();
-        Integer quantity = paymentRequestDto.getQuantity();
-        Integer totalAmount = paymentRequestDto.getTotalAmount();
-        Integer taxFreeAmount = paymentRequestDto.getTaxFreeAmount();
+    private final PaymentService paymentService;
 
-        String successMessage =
-                String.format(
-                        "'%s' 결제가 성공적으로 완료되었습니다. (수량: %d, 총 금액: %d원)",
-                        itemName, quantity, totalAmount);
+    @Operation(summary = "카카오페이 결제 준비", description = "카카오페이 결제를 위한 ready 요청을 처리합니다.")
+    @PostMapping("/ready")
+    public ResponseEntity<ApiResponse<KakaoReadyResponse>> requestPayment(
+            @RequestBody PaymentRequestDto requestDto) {
 
-        return ResponseEntity.ok(ApiResponse.success(successMessage, null));
+        KakaoReadyResponse response = paymentService.requestPayment(requestDto);
+        return ResponseEntity.ok(ApiResponse.success("카카오페이 결제 준비 완료", response));
+    }
+
+    @Operation(summary = "카카오페이 결제 승인", description = "pg_token을 받아 결제를 승인합니다.")
+    @GetMapping("/approve")
+    public ResponseEntity<ApiResponse<KakaoApproveResponse>> approvePayment(
+            @RequestParam("pg_token") String pgToken, @RequestParam("orderId") Long orderId) {
+
+        KakaoApproveResponse response = paymentService.approvePayment(pgToken, orderId);
+        return ResponseEntity.ok(ApiResponse.success("카카오페이 결제 승인 완료", response));
     }
 }
