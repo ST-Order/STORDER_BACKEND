@@ -1,6 +1,6 @@
 package com.storder.order.pay.dto.user;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -9,9 +9,9 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "카카오페이 결제 요청 DTO")
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PaymentRequestDto {
+@Schema(description = "카카오페이 결제 준비 요청 DTO")
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class KakaoReadyRequest {
 
     @Schema(description = "CID", example = "TC0ONETIME")
     private String cid;
@@ -33,9 +33,6 @@ public class PaymentRequestDto {
 
     @Schema(description = "비과세 금액", example = "0")
     private Integer taxFreeAmount;
-
-    @Schema(description = "부가세 금액", example = "100")
-    private Integer vatAmount;
 
     @Schema(description = "결제 성공 리다이렉트 URL", example = "http://localhost:8080")
     private String approvalUrl;
