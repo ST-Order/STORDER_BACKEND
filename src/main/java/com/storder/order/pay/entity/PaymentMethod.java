@@ -11,9 +11,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum PaymentMethod {
-    KAKAOPAY("카카오페이"),
-    CARD("신용카드"),
-    BANK_TRANSFER("계좌이체");
+    MONEY("카카오페이"),
+    CARD("신용카드");
 
     private final String name;
 

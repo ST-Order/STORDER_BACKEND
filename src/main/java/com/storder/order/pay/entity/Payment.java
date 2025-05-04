@@ -31,7 +31,7 @@ public class Payment extends BaseEntity {
     private String tid; // 카카오페이 결제 고유 번호
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method", nullable = false, length = 20)
+    @Column(name = "payment_method", length = 20)
     private PaymentMethod paymentMethod;
 
     @Enumerated(EnumType.STRING)
